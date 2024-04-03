@@ -1,8 +1,9 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 a {
     text-decoration: none;
 }
@@ -13,7 +14,8 @@ a {
     z-index: 999;
     padding: 88px 20px 20px 255px;
 }
-.container_body_admin_product{
+
+.container_body_admin_product {
     width: 100%;
     height: auto;
     margin: auto;
@@ -23,7 +25,7 @@ a {
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
-.box_add_product{
+.box_add_product {
     display: flex;
     gap: 0.5rem;
     align-items: center;
@@ -35,7 +37,8 @@ a {
     color: #FFFFFF;
     background-color: #15c65c;
 }
-#icon_add_product{
+
+#icon_add_product {
     width: 25px;
     height: 25px;
 }
@@ -96,9 +99,11 @@ a {
     justify-content: space-between;
     margin-bottom: 0.5rem;
 }
-.box_cart{
+
+.box_cart {
     margin-left: 12.8rem;
 }
+
 .box_icon_cart {
     color: #3a3a3a;
     display: flex;
@@ -155,9 +160,11 @@ a {
     margin-bottom: 10px;
     margin-top: 2.5rem;
 }
-.banner_no_box input{
+
+.banner_no_box input {
     display: none;
 }
+
 .banner_no_box_image {
     object-fit: cover;
     overflow: hidden;
@@ -169,13 +176,14 @@ a {
     cursor: pointer;
 }
 
-.box_image{
+.box_image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     overflow: hidden;
 }
-.box_image img{
+
+.box_image img {
     width: 100%;
     height: 100vh;
     cursor: pointer;
@@ -195,11 +203,13 @@ a {
     margin: 3px;
     cursor: pointer;
 }
+
 .trigger_popup_fricc {
     cursor: pointer;
     position: relative;
 }
-#box_icon_camera{
+
+#box_icon_camera {
     color: #f46738;
 }
 
@@ -258,40 +268,45 @@ a {
 
 /* ====== box_category ===========*/
 
-.box_category{
+.box_category {
     display: flex;
     gap: 1.5rem;
     align-items: center;
     justify-content: center;
 }
-.box_contact_category{
+
+.box_contact_category {
     width: 110px;
     height: auto;
     border: solid 1px #ccc;
     padding: 5px 5px;
 }
-.box_contact_category img{
+
+.box_contact_category img {
     width: 100px;
 
 }
 
-.box_icon_MdOutlineEdit{
+.box_icon_MdOutlineEdit {
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
 }
-.box_MdOutlineEdit{
+
+.box_MdOutlineEdit {
     width: 100px;
     height: 50px;
 }
-#icon_edit_MdOutlineEdit{
+
+#icon_edit_MdOutlineEdit {
     width: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.box_MdOutlineEdit{
+
+.box_MdOutlineEdit {
     width: 18px;
     height: auto;
     background: #ccc;
@@ -316,7 +331,7 @@ a {
     cursor: pointer;
 }
 
-  
+
 .edit_image_product {
     position: absolute;
     top: 10px;
@@ -326,9 +341,11 @@ a {
     padding: 4px 4px 0 4px;
     font-size: 20px;
 }
-#box_icon_CiCamera{
+
+#box_icon_CiCamera {
     color: #f46738;
 }
+
 .box_icon_CiCamera {
     position: absolute;
     top: 5px;
@@ -347,6 +364,7 @@ a {
     margin: auto;
     margin-top: 2rem;
 }
+
 .container_home {
     width: 65%;
     margin: 0 auto;
@@ -366,9 +384,11 @@ a {
     padding: 0.5rem 1rem;
     top: 70px;
 }
-.box_cart_search{
+
+.box_cart_search {
     margin-left: 10.5rem;
 }
+
 .box_icon_search {
     color: #3a3a3a;
     display: flex;
@@ -393,7 +413,7 @@ a {
     margin: auto;
 }
 
-.box_Filterseach_home{
+.box_Filterseach_home {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -434,7 +454,7 @@ input:focus {
     margin: 0 1rem;
 }
 
-.content_itemBox{
+.content_itemBox {
     margin-top: -3.5rem;
 }
 
@@ -465,6 +485,7 @@ input:focus {
     margin-top: 3rem;
     overflow: hidden;
 }
+
 .group_itemBox:hover {
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
 }
@@ -487,13 +508,14 @@ input:focus {
 }
 
 
-.box_icon_MdOutlineEdit{
+.box_icon_MdOutlineEdit {
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
 }
-#icon_edit{
+
+#icon_edit {
     width: 30px;
     height: 30px;
     background: #ccc;
@@ -502,18 +524,7 @@ input:focus {
 }
 
 
-.box_input-img{
-    width: 100%;
-    position: relative;
-    cursor: pointer;
-    /* background: #15c65c; */
-}
-.box_input-img .img{
-    display: none;
-}
-.box_input-img .img input{
-    display: none;
-}
+/*  */
 
 /* ============ icon camera =========== */
 
@@ -528,7 +539,7 @@ input:focus {
     margin: 3px;
 }
 
-#box_icon_camera_product{
+#box_icon_camera_product {
     color: #f46738;
 }
 
@@ -554,20 +565,56 @@ input:focus {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.box_input_image input{
+
+.box_input_image input {
     width: 80%;
     border-radius: 7px;
     display: none;
 }
-.box_input_image img{
+
+.box_input_image img {
     width: 100px;
     height: 185px;
     object-fit: cover;
     cursor: pointer;
     border-radius: 7px;
-    
+
 }
-.box_input_image p{
+
+.box_input_image p {
+    font-size: 18px;
+}
+
+.box_input_image_product {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100px;
+    height: 45vh;
+    object-fit: cover;
+    background-color: #FFF;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.box_input_image_product input {
+    display: none;
+}
+
+.box_input_image_product img {
+    width: 200px;
+    height: 185px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 7px;
+    background-color: #15c65c;
+    display: none;
+
+}
+
+.box_input_image_product p {
     font-size: 18px;
 }
 
@@ -580,6 +627,58 @@ input:focus {
     height: 100vh;
     background-color: #00000036;
     z-index: 999;
+}
+
+.formUpdate {
+    position: fixed;
+    text-align: center;
+    display: grid;
+    justify-content: center;
+    top: 30%;
+    left: 40%;
+    width: 500px;
+    height: 45vh;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    z-index: 999;
+}
+
+.imageBox {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+}
+
+.imageBox .choose {
+    display: flex;
+    position: absolute;
+    background: #000000a3;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    width: 100%;
+    height: 26.5vh;
+    overflow: hidden;
+    top: 19.5%;
+    left: 0;
+
+}
+
+.imageBox img {
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 100%;
+    height: 24vh;
+    object-fit: cover;
+}
+
+.btn-update-del {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: flex;
 }
 
 .hover_addproductpopup_box {
@@ -624,11 +723,13 @@ input:focus {
     font-size: 25px;
     margin: 3px;
 }
+
 .box_icon_camera {
     cursor: pointer;
     position: relative;
 }
-#icon_camera_product{
+
+#icon_camera_product {
     color: #f46738;
 }
 
@@ -639,14 +740,15 @@ input:focus {
 
 /* =========== onClick icon edit ===============*/
 
- 
-.container_popular{
+
+.container_popular {
     display: flex;
     gap: 2rem;
     align-items: center;
     font-size: 18px;
 }
-.container_popular input{
+
+.container_popular input {
     width: 20px;
     cursor: pointer;
 }
@@ -658,6 +760,23 @@ input:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.hover_addproductpopup_box_image2 {
+    width: 450px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hover_addproductpopup_box_image2 img {
+    width: 250px;
+    height: 150px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 7px;
 }
 
 .btn_cancel {
@@ -705,7 +824,7 @@ input:focus {
     border-radius: 7px;
     cursor: pointer;
 }
+
 .btn_foasdf {
     display: flex;
 }
-

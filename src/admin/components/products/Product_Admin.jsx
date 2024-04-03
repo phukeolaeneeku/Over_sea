@@ -379,86 +379,44 @@ const Product_Admin = () => {
                     >
                       <CiCamera id="box_icon_camera_product" />
                     </div>
+
                     {isConfirmationPopupOpenImage && (
-                     <form className="background_addproductpopup_box">
-                     <div className="hover_addproductpopup_box_image">
-                       <div className="box_input_image">
-                         <p>Edit banner image</p>
-     
-                         <label className="popup_Border_Boximagae">
-                           {mainImageBanner && mainImageBanner.length > 0 ? (
-                             <img
-                               src={URL.createObjectURL(mainImageBanner[0])}
-                               alt="Banner"
-                             />
-                           ) : (
-                             <img src={imageicon} alt="Banner" />
-                           )}
-                           <input
-                             type="file"
-                             id="img"
-                             onChange={handleImageBanner}
-                             required
-                           />
-                           <p className="box_choose_image">이미지 선택</p>
-                         </label>
-                       </div>
-                       <div className="btn_foasdf">
-                         <button
-                           className="btn_cancel btn_addproducttxt_popup"
-                           onClick={togglePopupimage}
-                         >
-                           Cancel
-                         </button>
-                         <button className="btn_confirm btn_addproducttxt_popup">
-                           Update
-                         </button>
-                       </div>
-                     </div>
-                   </form>
-                    )}
-                    {/* {isConfirmationPopupOpenImage && (
-                      <form className="background_addproductpopup_box">
-                        <div className="hover_addproductpopup_box_image">
-                          <div className="box_input_image">
-                            <p>Edit product image</p>
-                            <label
-                              htmlFor={`image-${index}`}
-                              className="popup_Border_Boximagae"
-                            >
-                              {selectedImages[index] ? (
-                                <img
-                                  src={URL.createObjectURL(
-                                    selectedImages[index]
-                                  )}
-                                  alt="product"
-                                />
-                              ) : (
-                                <img src={imageicon} alt="product" />
-                              )}
-                              <input
-                                type="file"
-                                id={`image-${index}`}
-                                onChange={(e) => handleImage(e, index)}
-                                required
+                      <form className="formUpdate">
+                        {/* <div className="hover_addproductpopup_box_image2"> */}
+                        <div className="imageBox">
+                          <p>Edit product image</p>
+                          <label>
+                            {selectedImages[index] ? (
+                              <img
+                                src={URL.createObjectURL(selectedImages[index])}
+                                alt="product"
                               />
-                              <p className="box_choose_image">이미지 선택</p>
-                            </label>
-                          </div>
-                          <div className="btn_foasdf">
-                            <button
-                              className="btn_cancel btn_addproducttxt_popup"
-                              onClick={closeConfirmationPopupImage}
-                            >
-                              Cancel
-                            </button>
-                            <button className="btn_confirm btn_addproducttxt_popup">
-                              Update
-                            </button>
-                          </div>
+                            ) : (
+                              <img src={imageicon} alt="product" />
+                            )}
+                            <input
+                              type="file"
+                              id={`image-${index}`}
+                              onChange={(e) => handleImage(e, index)}
+                              required
+                            />
+                            <div className="choose"><p>이미지 선택</p></div>
+                          </label>
+                        </div>
+                        <div className="btn-update-del">
+                          <button
+                            className="btn_cancel btn_addproducttxt_popup"
+                            onClick={closeConfirmationPopupImage}
+                          >
+                            Cancel
+                          </button>
+                          <button className="btn_confirm btn_addproducttxt_popup">
+                            Update
+                          </button>
+                          {/* </div> */}
                         </div>
                       </form>
-                    )} */}
+                    )}
                   </div>
 
                   <div className="txtOFproduct">

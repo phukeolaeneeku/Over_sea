@@ -573,7 +573,7 @@ input:focus {
 }
 
 .box_input_image img {
-    width: 100px;
+    width: 215px;
     height: 185px;
     object-fit: cover;
     cursor: pointer;
@@ -629,18 +629,30 @@ input:focus {
     z-index: 999;
 }
 
+.box_formUpdate{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #00000016;
+    z-index: 999;
+}
+
 .formUpdate {
     position: fixed;
     text-align: center;
     display: grid;
     justify-content: center;
-    top: 30%;
-    left: 40%;
-    width: 500px;
-    height: 45vh;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+    top: 22%;
+    left: 32.5%;
+    width: 540px;
+    height: 55vh;
     background-color: #fff;
     z-index: 999;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    
 }
 
 .imageBox {
@@ -648,6 +660,10 @@ input:focus {
     width: 200px;
     height: 200px;
     text-align: center;
+}
+.imageBox p{
+    padding: 40px 0;
+    font-size: 18px;
 }
 
 .imageBox .choose {
@@ -658,20 +674,21 @@ input:focus {
     justify-content: center;
     color: #fff;
     width: 100%;
-    height: 26.5vh;
+    height: 26.9vh;
     overflow: hidden;
-    top: 19.5%;
+    top: 50.5%;
     left: 0;
-
+    border-radius: 7px;
 }
 
 .imageBox img {
     position: absolute;
     left: 0;
-    top: 10%;
+    top: 0;
     width: 100%;
     height: 24vh;
     object-fit: cover;
+    border-radius: 7px;
 }
 
 .btn-update-del {
@@ -819,7 +836,7 @@ input:focus {
     color: white;
     top: 23.5%;
     left: 29.5%;
-    padding: 5.1rem 3.6rem;
+    padding: 5.1rem 3.8rem;
     background-color: #00000089;
     border-radius: 7px;
     cursor: pointer;

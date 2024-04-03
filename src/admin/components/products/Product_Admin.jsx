@@ -381,39 +381,44 @@ const Product_Admin = () => {
                     </div>
 
                     {isConfirmationPopupOpenImage && (
-                      <form className="formUpdate">
-                        {/* <div className="hover_addproductpopup_box_image2"> */}
-                        <div className="imageBox">
-                          <p>Edit product image</p>
-                          <label>
-                            {selectedImages[index] ? (
-                              <img
-                                src={URL.createObjectURL(selectedImages[index])}
-                                alt="product"
+                      <form className="box_formUpdate">
+                        <div className="formUpdate">
+                          <div className="imageBox">
+                            <p>Edit product image</p>
+                            <label>
+                              {selectedImages[index] ? (
+                                <img
+                                  src={URL.createObjectURL(
+                                    selectedImages[index]
+                                  )}
+                                  alt="product"
+                                />
+                              ) : (
+                                <img src={imageicon} alt="product" />
+                              )}
+                              <input
+                                type="file"
+                                id={`image-${index}`}
+                                onChange={(e) => handleImage(e, index)}
+                                required
                               />
-                            ) : (
-                              <img src={imageicon} alt="product" />
-                            )}
-                            <input
-                              type="file"
-                              id={`image-${index}`}
-                              onChange={(e) => handleImage(e, index)}
-                              required
-                            />
-                            <div className="choose"><p>이미지 선택</p></div>
-                          </label>
-                        </div>
-                        <div className="btn-update-del">
-                          <button
-                            className="btn_cancel btn_addproducttxt_popup"
-                            onClick={closeConfirmationPopupImage}
-                          >
-                            Cancel
-                          </button>
-                          <button className="btn_confirm btn_addproducttxt_popup">
-                            Update
-                          </button>
-                          {/* </div> */}
+                              <div className="choose">
+                                <p>이미지 선택</p>
+                              </div>
+                            </label>
+                          </div>
+                          <div className="btn-update-del">
+                            <button
+                              className="btn_cancel btn_addproducttxt_popup"
+                              onClick={closeConfirmationPopupImage}
+                            >
+                              Cancel
+                            </button>
+                            <button className="btn_confirm btn_addproducttxt_popup">
+                              Update
+                            </button>
+                            {/* </div> */}
+                          </div>
                         </div>
                       </form>
                     )}

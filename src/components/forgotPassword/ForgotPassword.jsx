@@ -4,6 +4,7 @@ import "./forgotPassword.css";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
 import axios from "axios";
+import Header from "../header/Header";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -77,103 +78,106 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div className="box_forgot">
-        <div onClick={goBack} className="box_iconBack">
-          <MdArrowBack id="iconBack" />
-        </div>
-        <h2>Find password</h2>
-        <div className="title">
-          Please change your password after verifying your email!
-        </div>
-        <form className="container_form_forgot">
-          <div className="box_infor">Enter basic information</div>
+    <Header/>
+      <section>
+        <div className="box_forgot">
+          {/* <div onClick={goBack} className="box_iconBack">
+            <MdArrowBack id="iconBack" />
+          </div> */}
+          <h2>Find password</h2>
+          <div className="title">
+            Please change your password after verifying your email!
+          </div>
+          <form className="container_form_forgot">
+            <div className="box_infor">Enter basic information</div>
 
-          <div className="container_form_forgot2">
+            <div className="container_form_forgot2">
+              <input
+                type="email"
+                placeholder="Email"
+                required
+                name="email"
+                value={email}
+                onChange={onChange}
+              />
+
+              {minute > 0 || second > 0 ? (
+                <div id="email_send_btn" className="verification">
+                  {minute < 10 ? `0${minute}` : minute}:
+                  {second < 10 ? `0${second}` : second}
+                </div>
+              ) : (
+                <div
+                  onClick={() => {
+                    if (data.email.length > 0) {
+                      set_timer({ minute: 3, second: 0 });
+                      let config = {
+                        method: "post",
+                        maxBodyLength: Infinity,
+                        url: import.meta.env.VITE_API + "/user/send-email",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        data: data,
+                      };
+
+                      axios
+                        .request(config)
+                        .then((response) => {
+                          console.log(JSON.stringify(response.data));
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    } else {
+                      set_errorText("Please enter your e-mail.");
+                    }
+                  }}
+                  id="email_send_btn"
+                  className="verification"
+                >
+                  Verify
+                </div>
+              )}
+            </div>
+
             <input
-              type="email"
-              placeholder="Email"
+              type="text"
+              placeholder="Verification number"
               required
-              name="email"
-              value={email}
+              name="code"
+              value={code}
               onChange={onChange}
             />
-
-            {minute > 0 || second > 0 ? (
-              <div id="email_send_btn" className="verification">
-                {minute < 10 ? `0${minute}` : minute}:
-                {second < 10 ? `0${second}` : second}
-              </div>
-            ) : (
-              <div
-                onClick={() => {
-                  if (data.email.length > 0) {
-                    set_timer({ minute: 3, second: 0 });
-                    let config = {
-                      method: "post",
-                      maxBodyLength: Infinity,
-                      url: import.meta.env.VITE_API + "/user/send-email",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      data: data,
-                    };
-
-                    axios
-                      .request(config)
-                      .then((response) => {
-                        console.log(JSON.stringify(response.data));
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
-                  } else {
-                    set_errorText("Please enter your e-mail.");
-                  }
-                }}
-                id="email_send_btn"
-                className="verification"
-              >
-                Verify
-              </div>
-            )}
-          </div>
-
-          <input
-            type="text"
-            placeholder="Verification number"
-            required
-            name="code"
-            value={code}
-            onChange={onChange}
-          />
-          <input
-            type="password"
-            autoComplete="new-password"
-            placeholder="New passwords"
-            required
-            value={password}
-            onChange={onChange}
-            name="password"
-          />
-          <input
-            type="password"
-            autoComplete="new-password"
-            placeholder="Confirm password"
-            required
-            value={password2}
-            onChange={onChange}
-            name="password2"
-          />
-          <button type="submit" onClick={handleSubmit}>
-            Confirmation
-          </button>
-        </form>
-        {errorText.length > 0 && (
-          <div id="error_msg" className="error mt20">
-            {errorText}
-          </div>
-        )}
-      </div>
+            <input
+              type="password"
+              autoComplete="new-password"
+              placeholder="New passwords"
+              required
+              value={password}
+              onChange={onChange}
+              name="password"
+            />
+            <input
+              type="password"
+              autoComplete="new-password"
+              placeholder="Confirm password"
+              required
+              value={password2}
+              onChange={onChange}
+              name="password2"
+            />
+            <button type="submit" onClick={handleSubmit}>
+              Confirmation
+            </button>
+          </form>
+          {errorText.length > 0 && (
+            <div id="error_msg" className="error mt20">
+              {errorText}
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 };

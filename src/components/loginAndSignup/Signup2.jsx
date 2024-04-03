@@ -3,6 +3,7 @@ import "./userRegister.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
 import axios from "axios";
+import Header from "../header/Header";
 
 const Signup2 = () => {
   const locataion = useLocation();
@@ -71,10 +72,9 @@ const Signup2 = () => {
           set_errorText("This is an unknown error.");
         }
       });
-    console.log(data)
+    console.log(data);
   };
 
-  
   useEffect(() => {
     const countdown = setInterval(() => {
       if (second > 0) {
@@ -101,177 +101,177 @@ const Signup2 = () => {
 
   return (
     <>
-      <div className="box_forgot">
-        <Link to="/signup1" className="box_iconBack">
-          <MdArrowBack id="iconBack" />
-        </Link>
+    <Header/>
+      <section>
+        <div className="box_forgot">
+          {/* <Link to="/signup1" className="box_iconBack">
+            <MdArrowBack id="iconBack" />
+          </Link> */}
 
-        {user_tyep == "1" ? (
-          <h2>User registration</h2>
-        ) : (
-          <h2>Seller registration</h2>
-        )}
+          {user_tyep == "1" ? (
+            <h2>User registration</h2>
+          ) : (
+            <h2>Seller registration</h2>
+          )}
 
-        <div className="title">
-          You are in the process of signing up as a user!
-        </div>
-        <form className="container_form_user">
-          <div className="box_title">Enter basic information</div>
-          <div className="container_form_user2">
-            <input
-              type="email"
-              name="email"
-              onChange={onChange}
-              value={data.email}
-              placeholder="Email"
-              required
-            />
-            {minute > 0 || second > 0 ? (
-              <div id="email_send_btn" className="verification">
-                {minute < 10 ? `0${minute}` : minute}:
-                {second < 10 ? `0${second}` : second}
-              </div>
-            ) : (
-              <div
-                onClick={() => {
-                  if (data.email.length > 0) {
-                    set_timer({ minute: 3, second: 0 });
-                    let config = {
-                      method: "post",
-                      maxBodyLength: Infinity,
-                      url: import.meta.env.VITE_API + "/user/send-email",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      data: data,
-                    };
-
-                    axios
-                      .request(config)
-                      .then((response) => {
-                        console.log(JSON.stringify(response.data));
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
-                  } else {
-                    set_errorText("Please enter your e-mail.");
-                  }
-                }}
-                id="email_send_btn"
-                className="verification"
-              >
-                Verify
-              </div>
-            )}
+          <div className="title">
+            You are in the process of signing up as a user!
           </div>
-          <input
-            type="text"
-            name="code"
-            onChange={onChange}
-            value={data.code}
-            placeholder="Certication Number"
-            required
-          />
-          {user_tyep == "1" && (
+          <form className="container_form_user">
+            <div className="box_title">Enter basic information</div>
+            <div className="container_form_user2">
+              <input
+                type="email"
+                name="email"
+                onChange={onChange}
+                value={data.email}
+                placeholder="Email"
+                required
+              />
+              {minute > 0 || second > 0 ? (
+                <div id="email_send_btn" className="verification">
+                  {minute < 10 ? `0${minute}` : minute}:
+                  {second < 10 ? `0${second}` : second}
+                </div>
+              ) : (
+                <div
+                  onClick={() => {
+                    if (data.email.length > 0) {
+                      set_timer({ minute: 3, second: 0 });
+                      let config = {
+                        method: "post",
+                        maxBodyLength: Infinity,
+                        url: import.meta.env.VITE_API + "/user/send-email",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        data: data,
+                      };
+
+                      axios
+                        .request(config)
+                        .then((response) => {
+                          console.log(JSON.stringify(response.data));
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    } else {
+                      set_errorText("Please enter your e-mail.");
+                    }
+                  }}
+                  id="email_send_btn"
+                  className="verification"
+                >
+                  Verify
+                </div>
+              )}
+            </div>
             <input
               type="text"
-              name="nickname"
+              name="code"
               onChange={onChange}
-              value={data.nickname}
-              placeholder="Nickname (maximun 10 characters)"
+              value={data.code}
+              placeholder="Certication Number"
               required
             />
-          )}
+            {user_tyep == "1" && (
+              <input
+                type="text"
+                name="nickname"
+                onChange={onChange}
+                value={data.nickname}
+                placeholder="Nickname (maximun 10 characters)"
+                required
+              />
+            )}
 
-          <input
-            type="password"
-            name="password"
-            onChange={onChange}
-            value={data.password}
-            placeholder="passwords"
-            required
-          />
-          <input
-            type="password"
-            name="password2"
-            onChange={onChange}
-            value={data.password2}
-            placeholder="Confirm password"
-            required
-          />
-          {user_tyep == "2" && (
-            <>
-              <div className="title_seller2">Enter store information</div>
-              <input
-                type="text"
-                name="category"
-                placeholder="category"
-                value={data.category = "2"}
-                onChange={onChange}
-                required
-                hidden
-              />
-              <input
-                type="text"
-                name="name"
-                placeholder="Store name (required)"
-                value={data.name}
-                onChange={onChange}
-                required
-              />
-              <input
-                type="text"
-                name="address"
-                placeholder="Address (required) "
-                value={data.address}
-                onChange={onChange}
-                required
-              />
-              <input
-                type="text"
-                name="sub_address"
-                placeholder="Detailed address (optional)"
-                value={data.sub_address}
-                onChange={onChange}
-                
-              />
-              <input
-                type="text"
-                name="phone"
-                placeholder="Phone number (optional)"
-                value={data.phone}
-                onChange={onChange}
-                
-              />
-              <input
-                type="text"
-                name="company_number"
-                placeholder="Business registration number (optional)"
-                value={data.company_number}
-                onChange={onChange}
-                
-              />
+            <input
+              type="password"
+              name="password"
+              onChange={onChange}
+              value={data.password}
+              placeholder="passwords"
+              required
+            />
+            <input
+              type="password"
+              name="password2"
+              onChange={onChange}
+              value={data.password2}
+              placeholder="Confirm password"
+              required
+            />
+            {user_tyep == "2" && (
+              <>
+                <div className="title_seller2">Enter store information</div>
+                <input
+                  type="text"
+                  name="category"
+                  placeholder="category"
+                  value={(data.category = "2")}
+                  onChange={onChange}
+                  required
+                  hidden
+                />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Store name (required)"
+                  value={data.name}
+                  onChange={onChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Address (required) "
+                  value={data.address}
+                  onChange={onChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="sub_address"
+                  placeholder="Detailed address (optional)"
+                  value={data.sub_address}
+                  onChange={onChange}
+                />
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone number (optional)"
+                  value={data.phone}
+                  onChange={onChange}
+                />
+                <input
+                  type="text"
+                  name="company_number"
+                  placeholder="Business registration number (optional)"
+                  value={data.company_number}
+                  onChange={onChange}
+                />
 
-              <textarea
-                className="box_text"
-                name="introduce"
-                placeholder="Store introduction (optional/maximum 300 characters)"
-                maxLength="300"
-                value={data.introduce}
-                onChange={onChange}
-              ></textarea>
-            </>
-          )}
-          {/* {!passwordMatch && (
+                <textarea
+                  className="box_text"
+                  name="introduce"
+                  placeholder="Store introduction (optional/maximum 300 characters)"
+                  maxLength="300"
+                  value={data.introduce}
+                  onChange={onChange}
+                ></textarea>
+              </>
+            )}
+            {/* {!passwordMatch && (
             <p className="error-text">Passwords do not match.</p>
           )} */}
-          <button type="button" onClick={SignUp}>
-            Register
-          </button>
-        </form>
-        {errorText.length > 0 && <div>{errorText}</div>}
-      </div>
+            <button type="button" onClick={SignUp}>
+              Register
+            </button>
+          </form>
+          {errorText.length > 0 && <div>{errorText}</div>}
+        </div>
+      </section>
     </>
   );
 };

@@ -2,7 +2,7 @@
 .box_forgot {
     width: 80%;
     margin: auto;
-    padding: 70px 0;
+    padding: 100px 0;
     text-align: center;
 }
 .title{
@@ -76,7 +76,7 @@
 @media (max-width: 768px) {
   .box_forgot {
     width: 100%;
-    top: 40%;
+    top: 0%;
     left: 50%;
   /* Adjusting width for medium-sized screens */
   }

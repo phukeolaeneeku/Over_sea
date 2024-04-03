@@ -3,12 +3,12 @@ import "./registerUser.css";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUsers } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
-
+import Header from "../header/Header";
 
 const RegisterUser = () => {
-  const [signup, setSignup] = useState('');
+  const [signup, setSignup] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const selectSignup = (event) => {
     const { id } = event.target;
@@ -17,24 +17,24 @@ const RegisterUser = () => {
 
   const handleNextClick = () => {
     if (signup == "user") {
-      navigate('/userregister')
-    }else if (signup == "seller"){
-      navigate('/sellerregister')
+      navigate("/userregister");
+    } else if (signup == "seller") {
+      navigate("/sellerregister");
     }
   };
 
   return (
     <>
+    <Header/>
+      <section>
         <div className="signup_page">
           <div className="box_back">
             <Link to="/loginuser" className="box_iconBack_user">
-              <MdArrowBack id='iconBack'/>
+              <MdArrowBack id="iconBack" />
             </Link>
           </div>
 
-          <h3 className="title_mt20">
-            Join the membership
-          </h3>
+          <h3 className="title_mt20">Join the membership</h3>
           <p>Please sign up to use the service!</p>
           <div className="box_form_register">
             <div className="input_wrap">
@@ -47,7 +47,7 @@ const RegisterUser = () => {
                     onChange={selectSignup}
                   />
                   <label htmlFor="user" className="user_type02">
-                    <FaUsers id="icon_user_sell"/>
+                    <FaUsers id="icon_user_sell" />
                     User
                   </label>
                 </li>
@@ -61,15 +61,18 @@ const RegisterUser = () => {
                     onChange={selectSignup}
                   />
                   <label htmlFor="seller" className="user_type02">
-                    <FaUsers id="icon_user_sell"/>
+                    <FaUsers id="icon_user_sell" />
                     Seller
                   </label>
                 </li>
               </ul>
             </div>
-            <button onClick={handleNextClick} className="btn_register_next">Next</button>
+            <button onClick={handleNextClick} className="btn_register_next">
+              Next
+            </button>
           </div>
         </div>
+      </section>
     </>
   );
 };

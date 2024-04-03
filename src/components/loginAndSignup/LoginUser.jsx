@@ -6,6 +6,7 @@ import { MdArrowBack } from "react-icons/md";
 // import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 // import { GoogleOAuthProvider } from '@react-oauth/google';
 import axios from "axios";
+import Header from "../header/Header";
 
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 
@@ -91,12 +92,13 @@ const LoginUser = () => {
 
   return (
     <>
+    <Header/>
       <section>
         <form className="box_container_login2">
           <div className="cover">
-            <Link to="/" className="box_iconBack">
+            {/* <Link to="/" className="box_iconBack">
               <MdArrowBack id="iconBack" />
-            </Link>
+            </Link> */}
             <h2 className="box_container_login_text">{login_en}</h2>
             <p className="box_pleaselogin">Please Log in to use the service!</p>
             <div className="input">

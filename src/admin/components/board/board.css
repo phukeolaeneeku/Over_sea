@@ -50,6 +50,19 @@ body {
     overflow: hidden;
     border-radius: 12px;
     border: 1px solid #eee;
+
+}
+.board .manage-target .manage .menu-boxs {
+    display: grid;
+    width: 180px;
+    height: 184px;
+    text-align: center;
+    align-items: center;
+    margin: 0 0.2rem;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid #eee;
+
 }
 
 .board .manage-target .manage .menu-box div {
@@ -66,6 +79,13 @@ body {
     padding: 10px;
     border-radius: 100px;
 }
+.board .manage-target .manage .box_history .iconGads {
+    color: #FFF;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 100px;
+}
 
 .board .manage-target .manage .menu-box .gone1 {
     background-color: #737791;
@@ -73,6 +93,9 @@ body {
 
 .board .manage-target .manage .menu-box .gone2 {
     background-color: #FF947A;
+}
+.board .manage-target .manage .box_history .gone22 {
+    background-color: #7a95ffde;
 }
 
 .board .manage-target .manage .menu-box .gone3 {
@@ -105,7 +128,7 @@ body {
 
 /* Target */
 .board .manage-target .target {
-    padding: 25px 18px 0 19px;
+    padding: 20px 20px 20px 20px;
     width: 450px;
     height: 351px;
     border-radius: 20px;
@@ -114,65 +137,52 @@ body {
     box-shadow: 0px 4px 20px 0px rgba(238, 238, 238, 0.50);
 }
 
-/* Graph image */
-.board .manage-target .target .target-graph {
-    display: flex;
-    align-items: last baseline;
-    justify-content: space-between;
-    padding: 1rem 0;
-}
-
-.board .manage-target .target .target-graph img {
-    width: 100%;
-}
-
-/* Reality */
-.gouplast {
-    margin-top: 1rem;
-    display: grid;
-    gap: 1rem;
-}
-
-.board .manage-target .target .reality,
-.board .manage-target .target .target-sale {
+/* ========= Sales ===========*/
+.box_sales{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 10px;
+}
+.boxfiltermonth {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.filter_month {
+    font-size: 16px;
+    padding: 7px 15px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.board .manage-target .target span p {
-    color: #ABB2B9;
-    font-weight: 100;
+.box_sales_quantity{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding: 10px 10px;
+}
+.txtBoxmonth h3{
+    text-align: center;
+    padding: 10px;
+}
+.txt_history{
+    font-size: 18px;
 }
 
-.board .manage-target .target .reality span,
-.board .manage-target .target .target-sale span {
-    margin-left: -8rem;
+.box_history{
+    display: grid;
+    width: 180px;
+    height: 184px;
+    text-align: center;
+    align-items: center;
+    margin: 0 8rem;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    background: #5575f42f;
 }
-
-.board .manage-target .target .reality .bag {
-    color: #52BE80;
-    background-color: #EAFAF1;
-    border-radius: 7px;
-    padding: 0.5rem 0.7rem;
-}
-
-.board .manage-target .target .reality .number {
-    color: #52BE80;
-}
-
-/* Target sale */
-.board .manage-target .target .target-sale .sale {
-    color: #F5B041;
-    background-color: #FEF9E7;
-    border-radius: 7px;
-    padding: 0.5rem 0.7rem;
-}
-
-.board .manage-target .target .target-sale .number {
-    color: #F5B041;
-}
-
 
 /* Products and visit */
 .products-visit {
@@ -184,7 +194,7 @@ body {
 }
 
 .products-visit .products {
-    width: 720px;
+    width: 1240px;
     height: 351px;
     border-radius: 20px;
     border: 1px solid #F8F9FA;
@@ -203,6 +213,7 @@ body {
 /* Products */
 .products-visit .products .items {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #eee;
 }

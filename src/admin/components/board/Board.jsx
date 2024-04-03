@@ -20,40 +20,40 @@ const Board = () => {
                   <div className="menu-box four">
                     <div>
                       <IoDocumentText className="iconGad gone4" />
-                      <p>Admins</p>
+                      <p>Pending</p>
                     </div>
                     <h2>5</h2>
-                    <Link to="/admins" className="txtcol">
+                    <Link to="#" className="txtcol">
                       <p>View More</p>
                     </Link>
                   </div>
                   <div className="menu-box three">
                     <div>
                       <IoDocumentText className="iconGad gone3" />
-                      <p>Users</p>
+                      <p>Process</p>
                     </div>
                     <h2>5</h2>
-                    <Link to="/users" className="txtcol">
+                    <Link to="#" className="txtcol">
                       <p>View More</p>
                     </Link>
                   </div>
                   <div className="menu-box one">
                     <div>
                       <IoDocumentText className="iconGad gone1" />
-                      <p>Porducts</p>
+                      <p>Delivered</p>
                     </div>
                     <h2>5</h2>
-                    <Link to="/product-admin" className="txtcol">
+                    <Link to="#" className="txtcol">
                       View More
                     </Link>
                   </div>
                   <div className="menu-box two">
                     <div>
                       <IoDocumentText className="iconGad gone2" />
-                      <p>Orders</p>
+                      <p>Delivered</p>
                     </div>
                     <h2>5</h2>
-                    <Link to="/order-admin" className="txtcol">
+                    <Link to="#" className="txtcol">
                       <p>View More</p>
                     </Link>
                   </div>

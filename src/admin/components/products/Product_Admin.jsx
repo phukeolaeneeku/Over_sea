@@ -20,6 +20,7 @@ const Product_Admin = () => {
       size: "L",
       color: "black",
       images: [{ src: productImage }],
+      category: "Electronic",
     },
     {
       productID: 2,
@@ -29,6 +30,7 @@ const Product_Admin = () => {
       color: "black",
       desc: "High-top leather snaeker",
       images: [{ src: productImage }],
+      category: "Electronic",
     },
     {
       productID: 3,
@@ -38,6 +40,7 @@ const Product_Admin = () => {
       color: "black",
       desc: "High-top leather snaeker",
       images: [{ src: productImage }],
+      category: "Electronic",
     },
     {
       productID: 4,
@@ -47,6 +50,7 @@ const Product_Admin = () => {
       price: 18.5,
       desc: "High-top leather snaeker",
       images: [{ src: productImage }],
+      category: "Electronic",
     },
     {
       productID: 5,
@@ -55,6 +59,7 @@ const Product_Admin = () => {
       size: "L",
       color: "black",
       images: [{ src: productImage }],
+      category: "Electronic",
     },
     {
       productID: 6,
@@ -64,6 +69,7 @@ const Product_Admin = () => {
       color: "black",
       desc: "High-top leather snaeker",
       images: [{ src: productImage }],
+      category: "Electronic",
     },
   ]);
 
@@ -80,6 +86,7 @@ const Product_Admin = () => {
   const [isConfirmationPopupOpenImage, setConfirmationPopupOpenImage] =
     useState(false);
   const [mainImageBanner, setMainImageBanner] = useState(null);
+  const [mainImageCategory, setMainImagCategory] = useState(null);
 
   const handleImage = (event, index) => {
     const selectedImage = event.target.files[0];
@@ -97,6 +104,20 @@ const Product_Admin = () => {
 
       reader.onloadend = () => {
         setMainImageBanner([file]);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+  ///Choose image handleImageProductCategory
+  const handleImageProductCategory = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setMainImagCategory([file]);
       };
 
       reader.readAsDataURL(file);
@@ -179,6 +200,19 @@ const Product_Admin = () => {
   const togglePopupimage = () => {
     setPopupimage(!isPopupimage);
   };
+  // Choose Category image
+  const [isPopupImageName, setPopupImageName] = useState(false);
+
+  const togglePopupImageName = () => {
+    setPopupImageName(!isPopupImageName);
+  };
+
+  // Choose banner image
+  const [isPopupImageCategory, setPopupImageCategory] = useState(false);
+
+  const togglePopupImageCategory = () => {
+    setPopupImageCategory(!isPopupImageCategory);
+  };
 
   /////////////////////handleDelete
   const handleDelete = (index) => {
@@ -226,13 +260,11 @@ const Product_Admin = () => {
             <div className="edit_image_banner" onClick={togglePopupimage}>
               <CiCamera id="box_icon_camera" />
             </div>
-
             {isPopupimage && (
               <form className="background_addproductpopup_box">
                 <div className="hover_addproductpopup_box_image">
                   <div className="box_input_image">
                     <p>Edit banner image</p>
-
                     <label className="popup_Border_Boximagae">
                       {mainImageBanner && mainImageBanner.length > 0 ? (
                         <img
@@ -269,52 +301,74 @@ const Product_Admin = () => {
 
           <div className="box_category">
             <div className="box_contact_category">
-              <img src={productImage} alt="img" />
+              <div className="img">
+                {mainImageCategory && mainImageCategory.length > 0 ? (
+                  <img
+                    src={URL.createObjectURL(mainImageCategory[0])}
+                    alt="category"
+                  />
+                ) : (
+                  <img src={productImage} alt="img" />
+                )}
+              </div>
+              <div
+                className="ChooseImage_category"
+                onClick={togglePopupImageCategory}
+              >
+                <CiCamera id="iconCamera_category" />
+              </div>
               <div className="box_icon_MdOutlineEdit">
                 <p>Sneakers</p>
-                <p className="box_MdOutlineEdit">
+                <div
+                  className="box_MdOutlineEdit"
+                  onClick={togglePopupImageName}
+                >
                   <MdOutlineEdit id="icon_edit_MdOutlineEdit" />
-                </p>
+                </div>
               </div>
             </div>
-            <div className="box_contact_category">
-              <img src={productImage} alt="img" />
-              <div className="box_icon_MdOutlineEdit">
-                <p>Women</p>
-                <p className="box_MdOutlineEdit">
-                  <MdOutlineEdit id="icon_edit_MdOutlineEdit" />
-                </p>
-              </div>
-            </div>
-
-            <div className="box_contact_category">
-              <img src={productImage} alt="img" />
-              <div className="box_icon_MdOutlineEdit">
-                <p>Electronic</p>
-                <p className="box_MdOutlineEdit">
-                  <MdOutlineEdit id="icon_edit_MdOutlineEdit" />
-                </p>
-              </div>
-            </div>
-            <div className="box_contact_category">
-              <img src={productImage} alt="img" />
-
-              <div
-                className="box_icon_MdOutlineEdit"
-                onClick={() => openConfirmationPopup(product.productID)}
-              >
-                <p>Cosmetics</p>
-                <p className="box_MdOutlineEdit">
-                  <MdOutlineEdit id="icon_edit_MdOutlineEdit" />
-                </p>
-              </div>
-            </div>
-
-            {isConfirmationPopupOpen && (
+            {isPopupImageCategory && (
+              <form className="background_addproductpopup_box">
+                <div className="hover_addproductpopup_box_image">
+                  <div className="box_input_image">
+                    <p>Edit Category image</p>
+                    <label className="popup_Border_Boximagae">
+                      {mainImageCategory && mainImageCategory.length > 0 ? (
+                        <img
+                          src={URL.createObjectURL(mainImageCategory[0])}
+                          alt="category"
+                        />
+                      ) : (
+                        <img src={imageicon} alt="category" />
+                      )}
+                      <input
+                        type="file"
+                        id="img"
+                        onChange={handleImageProductCategory}
+                        required
+                      />
+                      <p className="box_choose_image">이미지 선택</p>
+                    </label>
+                  </div>
+                  <div className="btn_foasdf">
+                    <button
+                      className="btn_cancel btn_addproducttxt_popup"
+                      onClick={togglePopupImageCategory}
+                    >
+                      Cancel
+                    </button>
+                    <button className="btn_confirm btn_addproducttxt_popup">
+                      Update
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
+            {isPopupImageName && (
               <div className="background_addproductpopup_box">
                 <div className="hover_addproductpopup_box">
                   <div className="box_input">
-                    <p>Edit product name</p>
+                    <p>Edit category name</p>
                     <input
                       type="text"
                       placeholder="Name..."
@@ -324,7 +378,7 @@ const Product_Admin = () => {
                   <div className="btn_foasdf">
                     <button
                       className="btn_cancel btn_addproducttxt_popup"
-                      onClick={closeConfirmationPopup}
+                      onClick={togglePopupImageName}
                     >
                       Cancel
                     </button>
@@ -505,7 +559,7 @@ const Product_Admin = () => {
                       <div className="background_addproductpopup_box">
                         <div className="hover_addproductpopup_box">
                           <div className="box_input">
-                            <p>Edit Description price</p>
+                            <p>Edit Description</p>
                             <input
                               type="text"
                               placeholder="Description..."

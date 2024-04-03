@@ -273,31 +273,50 @@ a {
     gap: 1.5rem;
     align-items: center;
     justify-content: center;
+    margin-top: 1rem;
 }
 
 .box_contact_category {
-    width: 110px;
+    width: 150px;
     height: auto;
     border: solid 1px #ccc;
     padding: 5px 5px;
+    position: relative;
+    object-fit: cover;
 }
 
 .box_contact_category img {
-    width: 100px;
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    cursor: pointer;
+}
+.ChooseImage_category {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #FFF;
+    border-radius: 5px;
+    padding: 3px 3px 0 3px;
+    font-size: 15px;
+    cursor: pointer;
+}
 
+#iconCamera_category {
+    color: #f46738;
 }
 
 .box_icon_MdOutlineEdit {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
 }
-
-.box_MdOutlineEdit {
-    width: 100px;
-    height: 50px;
+.box_icon_MdOutlineEdit p{
+    width: 13%;
 }
+
 
 #icon_edit_MdOutlineEdit {
     width: 15px;
@@ -508,13 +527,6 @@ input:focus {
 }
 
 
-.box_icon_MdOutlineEdit {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-}
-
 #icon_edit {
     width: 30px;
     height: 30px;
@@ -679,6 +691,7 @@ input:focus {
     top: 50.5%;
     left: 0;
     border-radius: 7px;
+    cursor: pointer;
 }
 
 .imageBox img {
@@ -689,6 +702,7 @@ input:focus {
     height: 24vh;
     object-fit: cover;
     border-radius: 7px;
+    
 }
 
 .btn-update-del {

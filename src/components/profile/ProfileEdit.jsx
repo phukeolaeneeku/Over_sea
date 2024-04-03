@@ -29,7 +29,7 @@ const ProfileEdit = () => {
     <>
         <div className="ProfilePage_edit">
             <div className='boxgoback'>
-                <Link to="/profile" className="box_iconBack">
+                <Link to="/more" className="box_iconBack">
                     <MdArrowBack id='iconBack'/>
                 </Link>
             </div>

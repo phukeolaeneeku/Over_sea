@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import profile from "../../img/profile.jpg";
 import axios from "axios";
+import Header from "../header/Header";
 
 export const More = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -72,6 +73,7 @@ export const More = () => {
 
   return (
     <>
+    <Header/>
       <div className="header_box_management">
         <Link to="/" className="box_management_iconnback">
           <IoIosArrowBack id="icons_back" />
@@ -97,7 +99,7 @@ export const More = () => {
               Name: {JSON.parse(window.localStorage.getItem("user")).user_name || null}
             </div>
           </div>
-          <Link to="/profile" className="right_box">
+          <Link to="/profileedit" className="right_box">
             <button>View</button>
           </Link>
         </div>

@@ -9,14 +9,13 @@ import SigupGoogle from "./components/sigupforGoogle/SigupGoogle";
 
 
 import Signup1 from './components/loginAndSignup/Signup1';
-import Signup from './components/loginAndSignup/Signup';
 import Signup2 from './components/loginAndSignup/Signup2';
 import ChangeSeller from './components/loginAndSignup/ChangeSeller';
 
 
 //------ Profile Page ------//
 import ProfileEdit from './components/profile/ProfileEdit';
-import Profile from './components/profile/Profile';
+// import Profile from './components/profile/Profile';
 import Terms from './components/termsandprivacy/Terms';
 import Privacy from './components/termsandprivacy/Privacy';
 import More from "./components/more/More";
@@ -61,16 +60,16 @@ import BillStore from "./components/seller/orderStore/BillStore";
   import Editproduct_admin from "./admin/components/products/EditProduct";
   import Users from "./admin/components/menagerUser/Users";
   import User_details from "./admin/components/menagerUser/User_details";
-  import Order_admin from "./admin/components/orderPage/OrderPage";
   import OrderBill_Admin from "./admin/components/orderPage/OrderBill";
   import Admins from "./admin/components/menagerAdmin/Admins";
   import Add_Admin from "./admin/components/menagerAdmin/AddAdmin";
   // import EditA_dmin from "./admin/components/menagerAdmin/EditAdmin";
   import StoreAdmin from "./admin/components/storeMenagement/StoreAdmin";
   import Account_Admin from "./admin/components/accountAdmin/AccountAdmin";
-
-
-
+  import OrderPending from "./admin/components/orderPage/OrderPending"
+  import OrderProcess from "./admin/components/orderPage/OrderProcess"
+  import OrderShipped from "./admin/components/orderPage/OrderShipped"
+  import OrderDelivered from "./admin/components/orderPage/OrderDelivered"
 
 function App() {
   return (
@@ -93,7 +92,7 @@ function App() {
 
           {/* --------- Profile page---------- */}
           <Route path="/profileedit" Component={ProfileEdit} />
-          <Route path="/profile" Component={Profile} />
+          {/* <Route path="/profile" Component={Profile} /> */}
           {/* <Route path="/selleredit" Component={SellerEdit} /> */}
           <Route path="/more" Component={More} />
           <Route path="/terms" Component={Terms} />
@@ -144,15 +143,16 @@ function App() {
           <Route path="/editproduct-admin" Component={Editproduct_admin} />
           <Route path="/users" Component={Users} />
           <Route path="/user-details" Component={User_details} />
-          <Route path="/order-admin" Component={Order_admin} />
           <Route path="/orderbill-admin" Component={OrderBill_Admin} />
           <Route path="/admins" Component={Admins} />
           <Route path="/add-admin" Component={Add_Admin} />
           {/* <Route path="/edit-admin" Component={EditA_dmin} /> */}
           <Route path="/store-admin" Component={StoreAdmin} />
           <Route path="/account-admin" Component={Account_Admin} />
-
-
+          <Route path="/order/pending" Component={OrderPending} />
+          <Route path="/order/processing" Component={OrderProcess} />
+          <Route path="/order/shipped" Component={OrderShipped} />
+          <Route path="/order/delivered" Component={OrderDelivered} />
 
         </Routes>
       </Router>

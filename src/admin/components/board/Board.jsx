@@ -22,7 +22,7 @@ const Board = () => {
                       <p>Pending</p>
                     </div>
                     <h2>5</h2>
-                    <Link to="#" className="txtcol">
+                    <Link to="/order/pending" className="txtcol">
                       <p>View More</p>
                     </Link>
                   </div>
@@ -32,7 +32,7 @@ const Board = () => {
                       <p>Process</p>
                     </div>
                     <h2>5</h2>
-                    <Link to="#" className="txtcol">
+                    <Link to="/order/processing" className="txtcol">
                       <p>View More</p>
                     </Link>
                   </div>
@@ -42,17 +42,17 @@ const Board = () => {
                       <p>Delivered</p>
                     </div>
                     <h2>5</h2>
-                    <Link to="#" className="txtcol">
+                    <Link to="/order/delivered" className="txtcol">
                       View More
                     </Link>
                   </div>
                   <div className="menu-box two">
                     <div>
                       <IoDocumentText className="iconGad gone2" />
-                      <p>Delivered</p>
+                      <p>Shipped</p>
                     </div>
                     <h2>5</h2>
-                    <Link to="#" className="txtcol">
+                    <Link to="/order/shipped" className="txtcol">
                       <p>View More</p>
                     </Link>
                   </div>

@@ -13,7 +13,7 @@ function AccountAdmin() {
             <AdminMenu />
             <section id="addAmin">
                 <div className="goback">
-                    <Link to="/dashboard" className="box_guopIconbAck">
+                    <Link to="/admins" className="box_guopIconbAck">
                         <FaAngleLeft id="box_icon_Back" />
                         <p>Back</p>
                     </Link>
@@ -39,18 +39,6 @@ function AccountAdmin() {
                                         id="fname"
                                         className="input"
                                         placeholder="Fist name..."
-                                    />
-                                </div>
-                            </div>
-                            <div className="add-box">
-                                <label htmlFor="lname" className="titlelabel">Last name:</label>
-                                <div className="boxiconnandinput">
-                                    <LuUser className="iconinput" />
-                                    <input
-                                        type="text"
-                                        id="lname"
-                                        className="input"
-                                        placeholder="Last name..."
                                     />
                                 </div>
                             </div>

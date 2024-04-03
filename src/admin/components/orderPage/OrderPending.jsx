@@ -6,7 +6,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-const OrderPage = () => {
+const OrderPending = () => {
   const [orders, setOrders] = useState([]);
 
   // prev next button user in react
@@ -24,7 +24,7 @@ const OrderPage = () => {
       <section id='menager'>
         <div className='container_box_orderpage'>
           <div className='box_head_search'>
-            <h2>Order</h2>
+            <h3>Order</h3>
             <form className="search">
               <div className="search-box_menageruser">
                 <input
@@ -122,4 +122,4 @@ const OrderPage = () => {
   }
 }
 
-export default OrderPage
+export default OrderPending

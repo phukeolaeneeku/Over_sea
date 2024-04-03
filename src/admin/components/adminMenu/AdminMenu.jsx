@@ -49,10 +49,6 @@ const AdminMenu = () => {
               <IoDocumentText />
               <p>Products</p>
             </NavLink>
-            <NavLink to="/order-admin" className="link">
-              <MdOutlineSell />
-              <p>Orders</p>
-            </NavLink>
             <NavLink to="/store-admin" className="link">
               <HiOutlineBuildingStorefront />
               <p>Stores</p>

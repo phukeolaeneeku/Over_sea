@@ -93,7 +93,7 @@ export const More = () => {
                 alt=""
               />
             ) : (
-              <img src={profile} alt="" />
+              <img src={profile} alt=""/>
             )}
             <div className="user_name">
               Name: {JSON.parse(window.localStorage.getItem("user")).user_name || null}

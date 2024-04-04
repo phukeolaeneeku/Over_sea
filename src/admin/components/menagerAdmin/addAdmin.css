@@ -61,7 +61,9 @@
     border-radius: 0.375rem;
 }
 
+
 .iconinput {
+    font-size: 18px;
     position: absolute;
     margin-left: 10px;
     color: #666;
@@ -91,6 +93,7 @@
 
 #addAmin form .addAdminForm .add-box img {
     width: 100%;
+    cursor: pointer;
 }
 
 #addAmin form .addAdminForm .add-box .BorderinputThenImage {

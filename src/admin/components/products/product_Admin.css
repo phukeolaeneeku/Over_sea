@@ -278,18 +278,19 @@ a {
 
 .box_contact_category {
     width: 150px;
-    height: auto;
+    height: 165px;
     border: solid 1px #ccc;
     padding: 5px 5px;
+    border-radius: 4px;
     position: relative;
-    object-fit: cover;
+    overflow: hidden;
 }
 
 .box_contact_category img {
-    width: 100%;
-    object-fit: cover;
-    overflow: hidden;
+    width: 139px;
+    height: 130px;
     cursor: pointer;
+    object-fit: cover;
 }
 .ChooseImage_category {
     position: absolute;

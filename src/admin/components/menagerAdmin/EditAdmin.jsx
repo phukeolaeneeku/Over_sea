@@ -8,7 +8,7 @@ import { FiPhone } from "react-icons/fi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoKeySharp } from "react-icons/io5";
 
-const AddAdmin = () => {
+const EditAdmin = () => {
 
   return (
     <>
@@ -25,9 +25,9 @@ const AddAdmin = () => {
           <form >
             <div className="addAdminForm">
               <div className="boxhead_subminandtitle">
-                <h2 className="titleaddmin">Add Admin</h2>
+                <h2 className="titleaddmin">Edit Admin</h2>
                 <div>
-                  <button type="submit" className="submit">Add</button>
+                  <button type="submit" className="submit">Update</button>
                 </div>
               </div>
 
@@ -70,12 +70,12 @@ const AddAdmin = () => {
 
               </div>
               <div className="add-box">
-                <label htmlFor="lname" className="titlelabel">Password:</label>
+                <label htmlFor="pass" className="titlelabel">Password:</label>
                 <div className="boxiconnandinput">
                   <IoKeySharp className="iconinput" />
                   <input
                     type="text"
-                    id="lname"
+                    id="pass"
                     className="input"
                     placeholder="Password..."
                   />
@@ -96,4 +96,4 @@ const AddAdmin = () => {
   );
 };
 
-export default AddAdmin;
+export default EditAdmin;

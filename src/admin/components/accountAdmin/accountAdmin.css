@@ -13,10 +13,22 @@
     border: none;
     box-shadow: 0 0.125rem 0.25rem 0 rgba(57, 54, 52, 0.4);
 }
+.submit_delete_update {
+    padding: 0.1rem 2rem;
+    border-radius: 7px;
+    color: #fff;
+    font-size: 1.2rem;
+    background-color: #ff7446;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(57, 54, 52, 0.4);
+}
 
 .submit_add {
     padding: 0.1rem 2rem;
     border-radius: 7px;
+    display: flex;
+    align-items: center;
     color: #fff;
     font-size: 1.2rem;
     background-color: #27A7EF;

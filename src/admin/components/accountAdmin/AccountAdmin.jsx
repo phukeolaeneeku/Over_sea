@@ -13,7 +13,7 @@ function AccountAdmin() {
             <AdminMenu />
             <section id="addAmin">
                 <div className="goback">
-                    <Link to="/admins" className="box_guopIconbAck">
+                    <Link to="/dashboard" className="box_guopIconbAck">
                         <FaAngleLeft id="box_icon_Back" />
                         <p>Back</p>
                     </Link>
@@ -26,7 +26,7 @@ function AccountAdmin() {
                                 <h2 className="titleaddmin">Admin Account</h2>
                                 <div className='btn_boxAcouunt'>
                                     <button type="submit" className="submit_delete">Delete</button>
-                                    <button type="submit" className="submit_add">Edit</button>
+                                    <Link to="/edit-account" type="submit" className="submit_add">Edit</Link>
                                 </div>
                             </div>
 
@@ -66,7 +66,18 @@ function AccountAdmin() {
                                         placeholder="Phone number..."
                                     />
                                 </div>
-
+                            </div>
+                            <div className="add-box">
+                                <label htmlFor="pass" className="titlelabel">Password:</label>
+                                <div className="boxiconnandinput">
+                                    <FiPhone className="iconinput" />
+                                    <input
+                                        type="text"
+                                        id="pass"
+                                        className="input"
+                                        placeholder="Password..."
+                                    />
+                                </div>
                             </div>
                             <div className="add-box">
                                 <label htmlFor="adminImage" className="titlelabel">Profile image:</label>

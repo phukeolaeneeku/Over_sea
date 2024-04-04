@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import "./orderBill.css";
-import AdminMenu from '../adminMenu/AdminMenu';
-import { useLocation } from 'react-router-dom';
+import AdminMenu from "../adminMenu/AdminMenu";
+import { useLocation } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const OrderBill = () => {
-
   const [orders, setOrders] = useState([
     {
       orderID: 1,
@@ -139,7 +138,6 @@ const OrderBill = () => {
     { userID: 3, name: "Will", email: "wil@gmail.com" },
   ]);
 
-
   const filteredOrders = orders
     .filter((order) => order.orderID === 1) // Filter orders by orderID
     .map((order) => {
@@ -164,13 +162,11 @@ const OrderBill = () => {
     });
 
   // Completion
-  let statusDelivery = ''
+  let statusDelivery = "";
   if (filteredOrders) {
-    filteredOrders.forEach((order) => (
-      statusDelivery = order.status
-    ))
+    filteredOrders.forEach((order) => (statusDelivery = order.status));
   }
-  const [status, setStatus] = useState(statusDelivery)
+  const [status, setStatus] = useState(statusDelivery);
 
   // Handle status
   const handleStatus = (e) => {
@@ -181,21 +177,18 @@ const OrderBill = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(status)
-  }
-
-
+    console.log(status);
+  };
 
   return (
     <>
       <AdminMenu />
       <section id="abill">
-
         {filteredOrders.map((order) => (
           <div className="abill-detial" key={order.orderID}>
-            <div className='container_Order_Bill'>
-              <Link to="/order-admin" className='back_Order_Bill'>
-                <FaAngleLeft id='box_icon_Back' />
+            <div className="container_Order_Bill">
+              <Link to="/order-admin" className="back_Order_Bill">
+                <FaAngleLeft id="box_icon_Back" />
                 <p>Back</p>
               </Link>
               <h2>Order</h2>
@@ -241,22 +234,41 @@ const OrderBill = () => {
             <div className="aplace-on">
               <p>Payment date: {order.orderDate}</p>
               <p>Payment method: {order.payment}</p>
-              <p>Delivery: {order.delivery}</p>
               <form onSubmit={handleSubmit}>
-                <div>
-                  <select className='aplace_form_select' value={status} onChange={handleStatus}>
-                    <option className='aplace_form_select_option' value="pending">Pending</option>
-                    <option className='aplace_form_select_option' value="completed">Completed</option>
-                  </select>
+                <div className="status">
+                  <div className="url">
+                    <label htmlFor="chinaToLaoURL">url China to Lao:</label>
+                    <input
+                      type="text"
+                      id="chinaToLaoURL"
+                      name="chinaToLaoURL"
+                      placeholder="url delivery from china"
+                    />
+                    <button onClick={""}>add</button>
+                  </div>
+                  <div className="url">
+                    <label htmlFor="branTobranURL">url Bran to Bran:</label>
+                    <input
+                      type="text"
+                      id="branTobranURL"
+                      name="branTobranURL"
+                      placeholder="url delivery bran to bran"
+                    />
+                    <button onClick={""}>add</button>
+                  </div>
                 </div>
-                <button type='submit' className='aplace_form_button '>Confirm</button>
+                <div className="status btn">
+                  <button type="submit" className="aplace_form_button ">
+                    Confirm
+                  </button>
+                </div>
               </form>
             </div>
           </div>
         ))}
       </section>
     </>
-  )
-}
+  );
+};
 
-export default OrderBill
+export default OrderBill;

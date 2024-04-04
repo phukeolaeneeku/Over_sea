@@ -9,6 +9,7 @@ import { CiCamera } from "react-icons/ci";
 import imageicon from "../../../img/imageicon.jpg";
 import banner_no from "../../../img/banner_no.jpg";
 import { AiOutlineDelete } from "react-icons/ai";
+import { MdClose } from "react-icons/md";
 
 const Product_Admin = () => {
   const [products, setProducts] = useState([
@@ -16,60 +17,11 @@ const Product_Admin = () => {
       productID: 1,
       productName: "Snaekers",
       price: 18.5,
+      category: "Snaekers",
       desc: "High-top leather snaeker",
-      size: "L",
-      color: "black",
+      size: ["L ", "ML ", "L "],
+      color: ["black ", "black "],
       images: [{ src: productImage }],
-      category: "Electronic",
-    },
-    {
-      productID: 2,
-      productName: "Women Clothes",
-      price: 17.52,
-      size: "L",
-      color: "black",
-      desc: "High-top leather snaeker",
-      images: [{ src: productImage }],
-      category: "Electronic",
-    },
-    {
-      productID: 3,
-      productName: "Cosmetics",
-      price: 19.25,
-      size: "L",
-      color: "black",
-      desc: "High-top leather snaeker",
-      images: [{ src: productImage }],
-      category: "Electronic",
-    },
-    {
-      productID: 4,
-      size: "L",
-      color: "black",
-      productName: "Electronic",
-      price: 18.5,
-      desc: "High-top leather snaeker",
-      images: [{ src: productImage }],
-      category: "Electronic",
-    },
-    {
-      productID: 5,
-      productName: "Snaekers",
-      price: 19.5,
-      size: "L",
-      color: "black",
-      images: [{ src: productImage }],
-      category: "Electronic",
-    },
-    {
-      productID: 6,
-      productName: "Cosmetics",
-      price: 12.5,
-      size: "L",
-      color: "black",
-      desc: "High-top leather snaeker",
-      images: [{ src: productImage }],
-      category: "Electronic",
     },
   ]);
 
@@ -79,6 +31,8 @@ const Product_Admin = () => {
   const [updateProductId, setUpdateProductId] = useState(null);
   const [isConfirmationPopupOpen, setConfirmationPopupOpen] = useState(false);
   const [isConfirmationPopupOpenPrice, setConfirmationPopupOpenPrice] =
+    useState(false);
+  const [isConfirmationPopupOpenCategory, setConfirmationPopupOpenCategory] =
     useState(false);
   const [isConfirmationDesc, setConfirmationDesc] = useState(false);
   const [isConfirmationSize, setConfirmationSize] = useState(false);
@@ -157,6 +111,17 @@ const Product_Admin = () => {
     setUpdateProductId(null);
     setConfirmationPopupOpenPrice(false);
   };
+  ///// onClick icon edit product category
+
+  const openConfirmationPopupCategory = (productID) => {
+    setUpdateProductId(productID.price);
+    setConfirmationPopupOpenCategory(true);
+  };
+
+  const closeConfirmationPopupCategory = () => {
+    setUpdateProductId(null);
+    setConfirmationPopupOpenCategory(false);
+  };
 
   ///// onClick icon edit product Desc
 
@@ -221,18 +186,57 @@ const Product_Admin = () => {
     setProducts(updatedProducts);
   };
 
+  /////////////////////// Add Sizes
+  const handleSizeInputChange = (e, index) => {
+    const { value } = e.target;
+    const updatedProducts = [...products];
+    updatedProducts[index].currentsizes = value;
+    setProducts(updatedProducts);
+  };
+
+  const addSizeInput = (index) => {
+    const updatedProducts = [...products];
+    if (updatedProducts[index].currentsizes.trim() !== "") {
+      updatedProducts[index].size.push(updatedProducts[index].currentsizes);
+      updatedProducts[index].currentsizes = "";
+      setProducts(updatedProducts);
+    }
+  };
+
+  const removeSizeInput = (productIndex, sizeIndex) => {
+    const updatedProducts = [...products];
+    updatedProducts[productIndex].size.splice(sizeIndex, 1);
+    setProducts(updatedProducts);
+  };
+
+  ////////////////////// Add Colors
+  const handleColorInputChange = (e, index) => {
+    const { value } = e.target;
+    const updatedProducts = [...products];
+    updatedProducts[index].currentcolors = value;
+    setProducts(updatedProducts);
+  };
+
+  const addColorInput = (index) => {
+    const updatedProducts = [...products];
+    if (updatedProducts[index].currentcolors.trim() !== "") {
+      updatedProducts[index].color.push(updatedProducts[index].currentcolors);
+      updatedProducts[index].currentcolors = "";
+      setProducts(updatedProducts);
+    }
+  };
+
+  const removeColorInput = (productIndex, sizeIndex) => {
+    const updatedProducts = [...products];
+    updatedProducts[productIndex].color.splice(sizeIndex, 1);
+    setProducts(updatedProducts);
+  };
+
   return (
     <>
       <AdminMenu />
       <section id="product_admin">
         <div className="container_body_admin_product">
-          {/* <div className="search-box_product">
-            <input type="text" placeholder="Search ..." />
-            <button>
-              <IoSearchOutline />
-            </button>
-          </div> */}
-
           <div className="productHead_content">
             <h1 className="htxthead">
               <span className="spennofStyleadmin"></span>Product
@@ -318,7 +322,7 @@ const Product_Admin = () => {
                 <CiCamera id="iconCamera_category" />
               </div>
               <div className="box_icon_MdOutlineEdit">
-                <p>Sneakers</p>
+                <p>Sneakers </p>
                 <div
                   className="box_MdOutlineEdit"
                   onClick={togglePopupImageName}
@@ -521,7 +525,52 @@ const Product_Admin = () => {
                       <li>Price: ￦{product.price}</li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
+                    <div
+                      className="box_icon_MdOutlineEdit"
+                      onClick={() =>
+                        openConfirmationPopupCategory(product.productID)
+                      }
+                    >
+                      <li>Category: {product.category}</li>
+                      <MdOutlineEdit id="icon_edit" />
+                    </div>
 
+                    {isConfirmationPopupOpenCategory && (
+                      <div className="background_addproductpopup_box">
+                        <div className="hover_addproductpopup_box">
+                          <div className="box_input">
+                            <p>Edit category</p>
+                            <div className="box2">
+                              <select
+                                name="category"
+                                className="product_category_filter"
+                                required
+                              >
+                                <option value="Sneakers">Sneakers</option>
+                                <option value="Women Clothes">
+                                  Women Clothes
+                                </option>
+                                <option value="Electronic Devices">
+                                  Electronic Devices
+                                </option>
+                                <option value="Cosmetics">Cosmetics</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="btn_foasdf">
+                            <button
+                              className="btn_cancel btn_addproducttxt_popup"
+                              onClick={closeConfirmationPopupCategory}
+                            >
+                              Cancel
+                            </button>
+                            <button className="btn_confirm btn_addproducttxt_popup">
+                              Update
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     {isConfirmationPopupOpenPrice && (
                       <div className="background_addproductpopup_box">
                         <div className="hover_addproductpopup_box">
@@ -589,14 +638,45 @@ const Product_Admin = () => {
                     </div>
                     {isConfirmationSize && (
                       <div className="background_addproductpopup_box">
-                        <div className="hover_addproductpopup_box">
-                          <div className="box_input">
+                        <div className="addproductpopup_box">
+                          <div className="box_size_input">
                             <p>Edit product size</p>
-                            <input
-                              type="text"
-                              placeholder="Size..."
-                              className="input_of_txtAddproduct"
-                            />
+                            <div className="box_size_container">
+                              <div className="box_size_add">
+                                {product.size.map((size, sizeIndex) => (
+                                  <div
+                                    key={sizeIndex}
+                                    className="box_size_add_item"
+                                  >
+                                    <p>{size}</p>
+                                    <span
+                                      onClick={() =>
+                                        removeSizeInput(index, sizeIndex)
+                                      }
+                                    >
+                                      <MdClose id="icon_MdClose" />
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <div className="box_size_content">
+                                <input
+                                  type="text"
+                                  placeholder="Add Sizes..."
+                                  value={product.currentsizes || ""}
+                                  onChange={(e) =>
+                                    handleSizeInputChange(e, index)
+                                  }
+                                />
+                                <div
+                                  className="btn_addsize"
+                                  onClick={() => addSizeInput(index)}
+                                >
+                                  Add
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           <div className="btn_foasdf">
                             <button
@@ -621,14 +701,45 @@ const Product_Admin = () => {
                     </div>
                     {isConfirmationColor && (
                       <div className="background_addproductpopup_box">
-                        <div className="hover_addproductpopup_box">
-                          <div className="box_input">
+                        <div className="addproductpopup_box">
+                          <div className="box_size_input">
                             <p>Edit product color</p>
-                            <input
-                              type="text"
-                              placeholder="Color..."
-                              className="input_of_txtAddproduct"
-                            />
+                            <div className="box_size_container">
+                              <div className="box_size_add">
+                                {product.color.map((color, colorIndex) => (
+                                  <div
+                                    key={colorIndex}
+                                    className="box_size_add_item"
+                                  >
+                                    <p>{color}</p>
+                                    <span
+                                      onClick={() =>
+                                        removeColorInput(index, colorIndex)
+                                      }
+                                    >
+                                      <MdClose id="icon_MdClose" />
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <div className="box_size_content">
+                                <input
+                                  type="text"
+                                  placeholder="Add Colors..."
+                                  value={product.currentcolors || ""}
+                                  onChange={(e) =>
+                                    handleColorInputChange(e, index)
+                                  }
+                                />
+                                <div
+                                  className="btn_addsize"
+                                  onClick={() => addColorInput(index)}
+                                >
+                                  Add
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           <div className="btn_foasdf">
                             <button

@@ -63,11 +63,29 @@
     display: flex;
     justify-content: space-between;
 }
-
+.box_place{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
 .place-on {
-    display: grid;
+    display: grid; 
     gap: 1rem;
     padding: 0 2rem;
+}
+
+.Box_China_Branch{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.Box_btn_bill button{
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    color: aliceblue;
+    background: #FF4F16;
 }
 
 /* Responsive */

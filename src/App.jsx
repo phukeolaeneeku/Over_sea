@@ -15,7 +15,6 @@ import ChangeSeller from './components/loginAndSignup/ChangeSeller';
 
 //------ Profile Page ------//
 import ProfileEdit from './components/profile/ProfileEdit';
-// import Profile from './components/profile/Profile';
 import Terms from './components/termsandprivacy/Terms';
 import Privacy from './components/termsandprivacy/Privacy';
 import More from "./components/more/More";
@@ -57,7 +56,6 @@ import BillStore from "./components/seller/orderStore/BillStore";
   import Dashboard from "./admin/Dashboard";
   import Product_admin from "./admin/components/products/Product_Admin";
   import Addproduct_admin from "./admin/components/products/AddProduct";
-  import Editproduct_admin from "./admin/components/products/EditProduct";
   import Users from "./admin/components/menagerUser/Users";
   import User_details from "./admin/components/menagerUser/User_details";
   import OrderBill_Admin from "./admin/components/orderPage/OrderBill";
@@ -141,7 +139,6 @@ function App() {
           <Route path="/dashboard" Component={Dashboard} />
           <Route path="/product-admin" Component={Product_admin} />
           <Route path="/addproduct-admin" Component={Addproduct_admin} />
-          <Route path="/editproduct-admin" Component={Editproduct_admin} />
           <Route path="/users" Component={Users} />
           <Route path="/user-details" Component={User_details} />
           <Route path="/orderbill-admin" Component={OrderBill_Admin} />

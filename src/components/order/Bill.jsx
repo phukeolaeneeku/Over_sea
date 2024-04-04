@@ -176,16 +176,25 @@ const Bill = () => {
               Kip
             </p>
           </div>
-          <div className="place-on">
-            <p>Place on: BCEL</p>
-            <p>Payment method: Transfer</p>
-            <p>Contact number: +85620{order_list.tel}</p>
-            <p>Status: {order_list.status}</p>
-            <p>
-              Delivery: {order_list.shipping_company}, Province:{" "}
-              {order_list.province}, Destrict: {order_list.district}, Branch:{" "}
-              {order_list.branch}
-            </p>
+          <div className="box_place">
+            <div className="place-on">
+              <p>Place on: BCEL</p>
+              <p>Payment method: MasterCard</p>
+              {/* <p>Contact number: +85620{order_list.tel}</p> */}
+              {/* <p>Status: {order_list.status}</p> */}
+              <div className="Box_China_Branch">
+                <p>Follow your items (China to Laos): </p>
+                <Link to="https://www.youtube.com/">Click here</Link>
+              </div>
+              <div className="Box_China_Branch">
+                <p>Follow your items (Branch to Branch): </p>
+                <Link to="https://www.youtube.com/">Click here</Link>
+              </div>
+            </div>
+
+            <div className="Box_btn_bill">
+              <button type="sumit">See Bill</button>
+            </div>
           </div>
         </div>
         {order_list.status === "Delivered" && (

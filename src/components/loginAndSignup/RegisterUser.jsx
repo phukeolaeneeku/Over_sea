@@ -28,11 +28,11 @@ const RegisterUser = () => {
     <Header/>
       <section>
         <div className="signup_page">
-          <div className="box_back">
+          {/* <div className="box_back">
             <Link to="/loginuser" className="box_iconBack_user">
               <MdArrowBack id="iconBack" />
             </Link>
-          </div>
+          </div> */}
 
           <h3 className="title_mt20">Join the membership</h3>
           <p>Please sign up to use the service!</p>

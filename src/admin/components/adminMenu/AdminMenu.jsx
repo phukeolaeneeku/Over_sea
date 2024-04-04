@@ -10,6 +10,7 @@ import { NavLink } from "react-router-dom";
 import user from "../../../img/user.png";
 import { CiCamera } from "react-icons/ci";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import imageicon from "../../../img/imageicon.jpg";
 
 const AdminMenu = () => {
@@ -22,8 +23,8 @@ const AdminMenu = () => {
     setPopupImageLogo(!isPopupImageLogo);
   };
 
-   ///Choose image handleImageLogo
-   const handleImageLogo = (e) => {
+  ///Choose image handleImageLogo
+  const handleImageLogo = (e) => {
     const file = e.target.files[0];
 
     if (file) {
@@ -36,6 +37,26 @@ const AdminMenu = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+    return;
+  };
+
+  const handleConfirmLogout = () => {
+    handleLogout();
+    setShowConfirmation(false);
+  };
+
+  const handleCancelLogout = () => {
+    setShowConfirmation(false);
+  };
+
+
   return (
     <>
       <section id="dashboard">
@@ -61,21 +82,42 @@ const AdminMenu = () => {
               <LiaUserCogSolid />
               <p>Admins</p>
             </NavLink>
-            <div className="link">
+            <div onClick={() => setShowConfirmation(true)} className="link">
               <IoLogOutOutline />
               <p>Log Out</p>
             </div>
+            {showConfirmation && (
+              <div className="background_addproductpopup_box">
+                <div className="hover_addproductpopup_box">
+                  <div className="box_logout">
+                    <p>정말로 로그아웃하시겠습니까?</p>
+                  </div>
+                  <div className="btn_foasdf">
+                    <button
+                      className="btn_cancel btn_addproducttxt_popup"
+                      onClick={handleCancelLogout}
+                    >
+                      아니요
+                    </button>
+                    <button
+                      className="btn_confirm btn_addproducttxt_popup"
+                      onClick={handleConfirmLogout}
+                    >
+                      예
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
+
           <div className="right">
             <div className="box_popupImage_logo">
               <NavLink to="/" className="logo">
                 <img src={Logo1} alt="" />
               </NavLink>
               {/* <p className="txtName">Humascot</p> */}
-              <div
-                className="popup_image_logo"
-                onClick={togglePopupImageLogo}
-              >
+              <div className="popup_image_logo" onClick={togglePopupImageLogo}>
                 <CiCamera id="box_icon_camera" />
               </div>
               {isPopupImageLogo && (

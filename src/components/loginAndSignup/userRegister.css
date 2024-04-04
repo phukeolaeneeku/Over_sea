@@ -30,7 +30,7 @@
   display: grid;
   margin: 0 auto;
   gap: 15px;
-  width: 40%;
+  width: 50%;
 }
 
 .container_form_user2 {
@@ -42,6 +42,11 @@
 }
 .container_form_user2 input{
   border: none;
+}
+.title_seller2{
+  text-align: start;
+    font-size: 18px;
+    font-weight: 600;
 }
 .verification{
   right: 5px;

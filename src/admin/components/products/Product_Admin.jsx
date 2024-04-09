@@ -1,7 +1,7 @@
 import "./product_Admin.css";
 import productImage from "../../../img/productImage.png";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import AdminMenu from "../adminMenu/AdminMenu";
 import { BiPlus } from "react-icons/bi";
 import { MdOutlineEdit } from "react-icons/md";
@@ -9,25 +9,32 @@ import { CiCamera } from "react-icons/ci";
 import imageicon from "../../../img/imageicon.jpg";
 import banner_no from "../../../img/banner_no.jpg";
 import { AiOutlineDelete } from "react-icons/ai";
+import axios from "axios";
 import { MdClose } from "react-icons/md";
 
 const Product_Admin = () => {
-  const [products, setProducts] = useState([
-    {
-      productID: 1,
-      productName: "Snaekers",
-      price: 18.5,
-      category: "Snaekers",
-      desc: "High-top leather snaeker",
-      size: ["L ", "ML ", "L "],
-      color: ["black ", "black "],
-      images: [{ src: productImage }],
-    },
-  ]);
+  const token = localStorage.getItem("token");
+  const user = localStorage.getItem("user");
+  const [filter, set_filter] = useState(1);
+  const [category_name, set_category_name] = useState("All");
+  const [categories, set_categories] = useState([]);
+  const navigate = useNavigate();
+  const [product_id, set_product_id] = useState(null);
+  const [category_id, set_category_id] = useState(null);
+  const [background_image, set_background_image] = useState(null);
+  const [image, set_image] = useState(null);
+  const [goods_list, set_goods_list] = useState([]);
 
-  const [selectedImages, setSelectedImages] = useState(
-    Array(products.length).fill(null)
-  );
+  const [id, set_id] = useState(null);
+  const [data, set_data] = useState(null);
+  const [data_array, set_data_array] = useState([]);
+
+  var store_id = false;
+  if (localStorage.getItem("user")) {
+    store_id = JSON.parse(window.localStorage.getItem("user")).store_id;
+  }
+
+  const [selectedImages, setSelectedImages] = useState(null);
   const [updateProductId, setUpdateProductId] = useState(null);
   const [isConfirmationPopupOpen, setConfirmationPopupOpen] = useState(false);
   const [isConfirmationPopupOpenPrice, setConfirmationPopupOpenPrice] =
@@ -42,16 +49,136 @@ const Product_Admin = () => {
   const [mainImageBanner, setMainImageBanner] = useState(null);
   const [mainImageCategory, setMainImagCategory] = useState(null);
 
-  const handleImage = (event, index) => {
-    const selectedImage = event.target.files[0];
-    const updatedImages = [...selectedImages];
-    updatedImages[index] = selectedImage;
-    setSelectedImages(updatedImages);
+  useEffect(() => {
+    let data = JSON.stringify({
+      token: token,
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: import.meta.env.VITE_API + "/user/check-token",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.result != "success") {
+          localStorage.clear();
+
+          navigate("/loginuser");
+          return;
+        }
+      })
+      .catch((error) => {
+        localStorage.clear();
+        console.log(error);
+        navigate("/loginuser");
+        return;
+      });
+  }, [token]);
+
+  useEffect(() => {
+    let my_url = "";
+    if (category_name === "All") {
+      my_url = `/store/?category_type=${filter}`;
+    } else {
+      my_url = `/store/?category_name=${category_name}&category_type=${filter}`;
+    }
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: import.meta.env.VITE_API + my_url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        set_goods_list(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [goods_list, category_name, filter]);
+
+  console.log("goods_list: ", goods_list);
+
+  useEffect(() => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: import.meta.env.VITE_API + `/store/${store_id}`,
+      headers: {},
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data.background_image);
+        set_background_image(response.data.background_image);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [background_image]);
+
+  useEffect(() => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: import.meta.env.VITE_API + "/store/categories",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        set_categories(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [categories]);
+
+  const handleImage = (e) => {
+    // const selectedImage = e.target.files[0];
+    // setSelectedImages(selectedImage);
+    // set_data(selectedImage);
+
+    const file = e.target.files[0];
+
+    set_image(file);
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setSelectedImages([file]);
+      };
+
+      reader.readAsDataURL(file);
+    }
   };
 
   ///Choose image handleImageBanner
   const handleImageBanner = (e) => {
     const file = e.target.files[0];
+    console.log("1 ", file);
+
+    set_image(file);
+    // setMainImageBanner(file);
 
     if (file) {
       const reader = new FileReader();
@@ -63,9 +190,18 @@ const Product_Admin = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  console.log("Id ", id);
+  console.log("Data ", data);
+  console.log("Image ", image);
+  console.log("SelectedImages ", selectedImages);
+  console.log("data_array ", data_array);
+
   ///Choose image handleImageProductCategory
   const handleImageProductCategory = (e) => {
     const file = e.target.files[0];
+
+    set_image(file);
 
     if (file) {
       const reader = new FileReader();
@@ -79,83 +215,118 @@ const Product_Admin = () => {
   };
 
   //// onClick icon edit product name
-  const openConfirmationPopup = (productID) => {
-    setUpdateProductId(productID.productName);
+  const openConfirmationPopup = (id) => {
+    // setUpdateProductId(productID.productName);
+    set_id(id);
     setConfirmationPopupOpen(true);
   };
 
   const closeConfirmationPopup = () => {
-    setUpdateProductId(null);
+    // setUpdateProductId(null);
+    set_data(null);
+    set_id(null);
     setConfirmationPopupOpen(false);
   };
 
   //// onClick icon camera product image
-  const openConfirmationPopupImage = (productID) => {
-    setUpdateProductId(productID.images);
+  const openConfirmationPopupImage = (id) => {
+    // setUpdateProductId(productID.images);
+    set_id(id);
     setConfirmationPopupOpenImage(true);
   };
 
   const closeConfirmationPopupImage = () => {
-    setUpdateProductId(null);
+    // setUpdateProductId(null);
+    set_data(null);
+    set_id(null);
     setConfirmationPopupOpenImage(false);
+    setSelectedImages(null);
   };
 
   ///// onClick icon edit product price
 
-  const openConfirmationPopupPrice = (productID) => {
-    setUpdateProductId(productID.price);
+  const openConfirmationPopupPrice = (id) => {
+    // setUpdateProductId(productID.price);
+    set_id(id);
     setConfirmationPopupOpenPrice(true);
   };
 
   const closeConfirmationPopupPrice = () => {
-    setUpdateProductId(null);
+    // setUpdateProductId(null);
+    set_data(null);
+    set_id(null);
     setConfirmationPopupOpenPrice(false);
   };
+
   ///// onClick icon edit product category
 
-  const openConfirmationPopupCategory = (productID) => {
-    setUpdateProductId(productID.price);
+  const openConfirmationPopupCategory = (id) => {
+    // setUpdateProductId(productID.price);
+    set_id(id);
     setConfirmationPopupOpenCategory(true);
   };
 
   const closeConfirmationPopupCategory = () => {
-    setUpdateProductId(null);
+    // setUpdateProductId(null);
+    set_data(null);
+    set_id(null);
     setConfirmationPopupOpenCategory(false);
   };
 
   ///// onClick icon edit product Desc
 
-  const openConfirmationDesc = (productID) => {
-    setUpdateProductId(productID.price);
+  const openConfirmationDesc = (id) => {
+    // setUpdateProductId(productID.price);
+    set_id(id);
     setConfirmationDesc(true);
   };
 
   const closeConfirmationDesc = () => {
-    setUpdateProductId(null);
+    // setUpdateProductId(null);
+    set_data(null);
+    set_id(null);
     setConfirmationDesc(false);
   };
 
   ///// onClick icon edit product Size
 
-  const openConfirmationSize = (productID) => {
-    setUpdateProductId(productID.price);
+  // const openConfirmationSize = (id, sizes) => {
+  //   // setUpdateProductId(productID.price);
+  //   set_id(id);
+  //   set_data_array(sizes);
+  //   setConfirmationSize(true);
+  // };
+
+  const openConfirmationSize = (id, sizes) => {
+    set_id(id);
+    set_data_array(sizes);
     setConfirmationSize(true);
   };
 
+  // const closeConfirmationSize = () => {
+  //   // setUpdateProductId(null);
+  //   set_data(null);
+  //   set_id(null);
+  //   setConfirmationSize(false);
+
   const closeConfirmationSize = () => {
-    setUpdateProductId(null);
+    set_data_array([]);
+    set_id(null);
     setConfirmationSize(false);
   };
 
   ///// onClick icon edit product Size
 
-  const openConfirmationColor = (productID) => {
-    setUpdateProductId(productID.price);
+  const openConfirmationColor = (id) => {
+    // setUpdateProductId(productID.price);
+    set_id(id);
     setConfirmationColor(true);
   };
 
   const closeConfirmationColor = () => {
-    setUpdateProductId(null);
+    // setUpdateProductId(null);
+    set_data(null);
+    set_id(null);
     setConfirmationColor(false);
   };
 
@@ -164,72 +335,309 @@ const Product_Admin = () => {
 
   const togglePopupimage = () => {
     setPopupimage(!isPopupimage);
+    setMainImageBanner(null);
   };
   // Choose Category image
-  const [isPopupImageName, setPopupImageName] = useState(false);
+  const [isPopupName, setPopupName] = useState(false);
 
-  const togglePopupImageName = () => {
-    setPopupImageName(!isPopupImageName);
+  const togglePopupName = (id) => {
+    setPopupName(true);
+    set_id(id);
+  };
+  const togglePopupCancelName = () => {
+    setPopupName(false);
+    set_id(null);
   };
 
   // Choose banner image
   const [isPopupImageCategory, setPopupImageCategory] = useState(false);
 
-  const togglePopupImageCategory = () => {
-    setPopupImageCategory(!isPopupImageCategory);
+  const togglePopupImageCategory = (id) => {
+    setPopupImageCategory(true);
+    set_category_id(id);
   };
 
+  const togglePopupCancelImageCategory = () => {
+    setPopupImageCategory(false);
+    set_category_id(null);
+  };
+
+  // console.log(id);
+  // console.log(data);
+
   /////////////////////handleDelete
-  const handleDelete = (index) => {
-    const updatedProducts = [...products];
-    updatedProducts.splice(index, 1);
-    setProducts(updatedProducts);
+  const handleDelete = (id) => {
+    console.log(id);
+    let data = JSON.stringify({
+      goods_id: id,
+    });
+
+    let config = {
+      method: "delete",
+      maxBodyLength: Infinity,
+      url: import.meta.env.VITE_API + `/store/goods`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        alert("Successful delete the product.");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   /////////////////////// Add Sizes
   const handleSizeInputChange = (e, index) => {
     const { value } = e.target;
-    const updatedProducts = [...products];
-    updatedProducts[index].currentsizes = value;
-    setProducts(updatedProducts);
+    const updatedProducts = [...data_array];
+    updatedProducts[index]={...updatedProducts[index],currentsizes: value};
+    set_data_array(updatedProducts);
   };
+
+  // const handleSizeInputChange = (e, index) => {
+  //   const { value } = e.target;
+  //   const updatedProducts = [...data_array];
+  //   updatedProducts[index] = {...updatedProducts[index],currentsizes: value };
+  //   set_data_array(updatedProducts);
+  // };
 
   const addSizeInput = (index) => {
-    const updatedProducts = [...products];
+    const updatedProducts = [...data_array];
     if (updatedProducts[index].currentsizes.trim() !== "") {
-      updatedProducts[index].size.push(updatedProducts[index].currentsizes);
+      updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
       updatedProducts[index].currentsizes = "";
-      setProducts(updatedProducts);
+      set_data_array(updatedProducts);
     }
   };
 
-  const removeSizeInput = (productIndex, sizeIndex) => {
-    const updatedProducts = [...products];
-    updatedProducts[productIndex].size.splice(sizeIndex, 1);
-    setProducts(updatedProducts);
+  // const addSizeInput = (index) => {
+  //   const updatedProducts = [...data_array];
+  //   const currentSizes = updatedProducts[index].currentsizes.trim();
+  //   if (currentSizes !== "") {
+  //     updatedProducts[index] = {
+  //       ...updatedProducts[index],
+  //       sizes: [...updatedProducts[index].sizes, currentSizes],
+  //       currentsizes: ""
+  //     };
+  //     set_data_array(updatedProducts);
+  //   }
+  // };
+
+  const removeSizeInput = (index) => {
+    const updatedProducts = [...data_array];
+    updatedProducts.splice(index, 1);
+    set_data_array(updatedProducts);
   };
 
-  ////////////////////// Add Colors
-  const handleColorInputChange = (e, index) => {
-    const { value } = e.target;
-    const updatedProducts = [...products];
-    updatedProducts[index].currentcolors = value;
-    setProducts(updatedProducts);
+  // Submit button
+  const ChangeBackgroundImage = () => {
+    const formdata = new FormData();
+    formdata.append("background_image", image);
+
+    const requestOptions = {
+      method: "PATCH",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(import.meta.env.VITE_API + `/store/${store_id}`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+        alert("Update image banner sussessful.");
+      })
+      .catch((error) => console.error(error));
   };
 
-  const addColorInput = (index) => {
-    const updatedProducts = [...products];
-    if (updatedProducts[index].currentcolors.trim() !== "") {
-      updatedProducts[index].color.push(updatedProducts[index].currentcolors);
-      updatedProducts[index].currentcolors = "";
-      setProducts(updatedProducts);
-    }
+  const ChangeCategoryImage = () => {
+    const formdata = new FormData();
+    formdata.append("image", image);
+
+    const requestOptions = {
+      method: "PATCH",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(
+      import.meta.env.VITE_API + `/store/categories/${category_id}`,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+        alert("Product image has been change.");
+        set_image(null);
+        set_id(null);
+        setMainImageBanner(null);
+        setPopupImageCategory(false);
+      })
+      .catch((error) => console.error(error));
   };
 
-  const removeColorInput = (productIndex, sizeIndex) => {
-    const updatedProducts = [...products];
-    updatedProducts[productIndex].color.splice(sizeIndex, 1);
-    setProducts(updatedProducts);
+  const ChangeCategoryName = () => {
+    const formdata = new FormData();
+    formdata.append("name", data);
+
+    const requestOptions = {
+      method: "PATCH",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(
+      import.meta.env.VITE_API + `/store/product/update/${id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setPopupName(false);
+        set_data(null);
+        set_id(null);
+
+        alert("Category name has been change.");
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const ChangeProductImage = () => {
+    const myHeaders = new Headers();
+
+    const formdata = new FormData();
+    formdata.append("images", image);
+
+    const requestOptions = {
+      method: "PATCH",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(
+      import.meta.env.VITE_API + `/store/product/update/${id}`,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+        alert("Category image has been change.");
+        set_image(null);
+        set_category_id(null);
+        setMainImageBanner(null);
+        setPopupImageCategory(false);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const ChangeProductName = () => {
+    const formdata = new FormData();
+    formdata.append("name", data);
+
+    const requestOptions = {
+      method: "PATCH",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(
+      import.meta.env.VITE_API + `/store/product/update/${id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setConfirmationPopupOpen(false);
+        set_data(null);
+        set_id(null);
+
+        alert("Product name has been change.");
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const ChangeProductPrice = () => {
+    const formdata = new FormData();
+    formdata.append("price", data);
+
+    const requestOptions = {
+      method: "PATCH",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(
+      import.meta.env.VITE_API + `/store/product/update/${id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setConfirmationPopupOpenPrice(false);
+        set_data(null);
+        set_id(null);
+
+        alert("Product price has been change.");
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const ChangeProductCategory = () => {
+    const formdata = new FormData();
+    formdata.append("category", data);
+
+    const requestOptions = {
+      method: "PATCH",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(
+      import.meta.env.VITE_API + `/store/product/update/${id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setConfirmationPopupOpenCategory(false);
+        set_data(null);
+        set_id(null);
+
+        alert("Product category has been change.");
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const ChangeProductDescription = () => {
+    const formdata = new FormData();
+    formdata.append("description", data);
+
+    const requestOptions = {
+      method: "PATCH",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(
+      import.meta.env.VITE_API + `/store/product/update/${id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setConfirmationDesc(false);
+        set_data(null);
+        set_id(null);
+
+        alert("Product description has been change.");
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -237,6 +645,13 @@ const Product_Admin = () => {
       <AdminMenu />
       <section id="product_admin">
         <div className="container_body_admin_product">
+          {/* <div className="search-box_product">
+            <input type="text" placeholder="Search ..." />
+            <button>
+              <IoSearchOutline />
+            </button>
+          </div> */}
+
           <div className="productHead_content">
             <h1 className="htxthead">
               <span className="spennofStyleadmin"></span>Product
@@ -251,11 +666,8 @@ const Product_Admin = () => {
           <div className="banner_no_box">
             <div className="banner_no_box_image">
               <div className="img">
-                {mainImageBanner && mainImageBanner.length > 0 ? (
-                  <img
-                    src={URL.createObjectURL(mainImageBanner[0])}
-                    alt="Banner"
-                  />
+                {background_image ? (
+                  <img src={background_image} alt="Banner" />
                 ) : (
                   <img src={banner_no} alt="Banner" />
                 )}
@@ -294,7 +706,12 @@ const Product_Admin = () => {
                     >
                       Cancel
                     </button>
-                    <button className="btn_confirm btn_addproducttxt_popup">
+                    <button
+                      className="btn_confirm btn_addproducttxt_popup"
+                      onClick={() => {
+                        ChangeBackgroundImage();
+                      }}
+                    >
                       Update
                     </button>
                   </div>
@@ -304,33 +721,33 @@ const Product_Admin = () => {
           </div>
 
           <div className="box_category">
-            <div className="box_contact_category">
-              <div className="img">
-                {mainImageCategory && mainImageCategory.length > 0 ? (
-                  <img
-                    src={URL.createObjectURL(mainImageCategory[0])}
-                    alt="category"
-                  />
-                ) : (
-                  <img src={productImage} alt="img" />
-                )}
-              </div>
-              <div
-                className="ChooseImage_category"
-                onClick={togglePopupImageCategory}
-              >
-                <CiCamera id="iconCamera_category" />
-              </div>
-              <div className="box_icon_MdOutlineEdit">
-                <p>Sneakers </p>
+            {categories.map((category, index) => (
+              <div className="box_contact_category">
+                <div className="img">
+                  <img src={category.image} alt="img" />
+                </div>
                 <div
-                  className="box_MdOutlineEdit"
-                  onClick={togglePopupImageName}
+                  className="ChooseImage_category"
+                  onClick={() => {
+                    togglePopupImageCategory(category.id);
+                  }}
                 >
-                  <MdOutlineEdit id="icon_edit_MdOutlineEdit" />
+                  <CiCamera id="iconCamera_category" />
+                </div>
+                <div className="box_icon_MdOutlineEdit">
+                  <p>{category.name}</p>
+                  <div
+                    className="box_MdOutlineEdit"
+                    onClick={() => {
+                      togglePopupName(category.id);
+                    }}
+                  >
+                    <MdOutlineEdit id="icon_edit_MdOutlineEdit" />
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
+
             {isPopupImageCategory && (
               <form className="background_addproductpopup_box">
                 <div className="hover_addproductpopup_box_image">
@@ -357,18 +774,23 @@ const Product_Admin = () => {
                   <div className="btn_foasdf">
                     <button
                       className="btn_cancel btn_addproducttxt_popup"
-                      onClick={togglePopupImageCategory}
+                      onClick={togglePopupCancelImageCategory}
                     >
                       Cancel
                     </button>
-                    <button className="btn_confirm btn_addproducttxt_popup">
+                    <button
+                      className="btn_confirm btn_addproducttxt_popup"
+                      onClick={() => {
+                        ChangeCategoryImage();
+                      }}
+                    >
                       Update
                     </button>
                   </div>
                 </div>
               </form>
             )}
-            {isPopupImageName && (
+            {isPopupName && (
               <div className="background_addproductpopup_box">
                 <div className="hover_addproductpopup_box">
                   <div className="box_input">
@@ -377,16 +799,25 @@ const Product_Admin = () => {
                       type="text"
                       placeholder="Name..."
                       className="input_of_txtAddproduct"
+                      value={data}
+                      onChange={(e) => {
+                        set_data(e.target.value);
+                      }}
                     />
                   </div>
                   <div className="btn_foasdf">
                     <button
                       className="btn_cancel btn_addproducttxt_popup"
-                      onClick={togglePopupImageName}
+                      onClick={togglePopupCancelName}
                     >
                       Cancel
                     </button>
-                    <button className="btn_confirm btn_addproducttxt_popup">
+                    <button
+                      className="btn_confirm btn_addproducttxt_popup"
+                      onClick={() => {
+                        ChangeCategoryName();
+                      }}
+                    >
                       Update
                     </button>
                   </div>
@@ -402,18 +833,11 @@ const Product_Admin = () => {
               </h1>
             </div>
             <div className="contentImageProducts">
-              {products.map((product, index) => (
+              {goods_list.map((product, index) => (
                 <div className="box_product" key={index}>
                   <div className="box_input-img">
                     <div className="box_image">
-                      {selectedImages[index] ? (
-                        <img
-                          src={URL.createObjectURL(selectedImages[index])}
-                          alt="Product"
-                        />
-                      ) : (
-                        <img src={product.images[0].src} alt="Product" />
-                      )}
+                      <img src={product.images} alt="Product" />
                       <input
                         type="file"
                         id={`image-${index}`}
@@ -431,9 +855,7 @@ const Product_Admin = () => {
 
                     <div
                       className="edit_image_product"
-                      onClick={() =>
-                        openConfirmationPopupImage(product.productID)
-                      }
+                      onClick={() => openConfirmationPopupImage(product.id)}
                     >
                       <CiCamera id="box_icon_camera_product" />
                     </div>
@@ -444,13 +866,8 @@ const Product_Admin = () => {
                           <div className="imageBox">
                             <p>Edit product image</p>
                             <label>
-                              {selectedImages[index] ? (
-                                <img
-                                  src={URL.createObjectURL(
-                                    selectedImages[index]
-                                  )}
-                                  alt="product"
-                                />
+                              {data ? (
+                                <img src={data} alt="product" />
                               ) : (
                                 <img src={imageicon} alt="product" />
                               )}
@@ -472,7 +889,12 @@ const Product_Admin = () => {
                             >
                               Cancel
                             </button>
-                            <button className="btn_confirm btn_addproducttxt_popup">
+                            <button
+                              className="btn_confirm btn_addproducttxt_popup"
+                              onClick={() => {
+                                ChangeProductImage();
+                              }}
+                            >
                               Update
                             </button>
                             {/* </div> */}
@@ -485,9 +907,9 @@ const Product_Admin = () => {
                   <div className="txtOFproduct">
                     <div
                       className="box_icon_MdOutlineEdit"
-                      onClick={() => openConfirmationPopup(product.productID)}
+                      onClick={() => openConfirmationPopup(product.id)}
                     >
-                      <li>ProductName: {product.productName}</li>
+                      <li>ProductName: {product.name}</li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
                     {isConfirmationPopupOpen && (
@@ -499,6 +921,10 @@ const Product_Admin = () => {
                               type="text"
                               placeholder="Name..."
                               className="input_of_txtAddproduct"
+                              value={data}
+                              onChange={(e) => {
+                                set_data(e.target.value);
+                              }}
                             />
                           </div>
                           <div className="btn_foasdf">
@@ -508,7 +934,12 @@ const Product_Admin = () => {
                             >
                               Cancel
                             </button>
-                            <button className="btn_confirm btn_addproducttxt_popup">
+                            <button
+                              className="btn_confirm btn_addproducttxt_popup"
+                              onClick={() => {
+                                ChangeProductName();
+                              }}
+                            >
                               Update
                             </button>
                           </div>
@@ -518,18 +949,14 @@ const Product_Admin = () => {
 
                     <div
                       className="box_icon_MdOutlineEdit"
-                      onClick={() =>
-                        openConfirmationPopupPrice(product.productID)
-                      }
+                      onClick={() => openConfirmationPopupPrice(product.id)}
                     >
                       <li>Price: ￦{product.price}</li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
                     <div
                       className="box_icon_MdOutlineEdit"
-                      onClick={() =>
-                        openConfirmationPopupCategory(product.productID)
-                      }
+                      onClick={() => openConfirmationPopupCategory(product.id)}
                     >
                       <li>Category: {product.category}</li>
                       <MdOutlineEdit id="icon_edit" />
@@ -545,15 +972,30 @@ const Product_Admin = () => {
                                 name="category"
                                 className="product_category_filter"
                                 required
+                                onChange={(e) => set_data(e.target.value)}
                               >
-                                <option value="Sneakers">Sneakers</option>
+                                {/* <option value="Sneakers">Sneakers</option>
                                 <option value="Women Clothes">
                                   Women Clothes
                                 </option>
                                 <option value="Electronic Devices">
                                   Electronic Devices
                                 </option>
-                                <option value="Cosmetics">Cosmetics</option>
+                                <option value="Cosmetics">Cosmetics</option> */}
+                                <option className="inputproduct" value="">
+                                  Select category
+                                </option>
+                                {categories.map((category) => (
+                                  <option key={category.id} value={category.id}>
+                                    {category.name}
+                                  </option>
+                                ))}
+
+                                {/* {categories.map((item) => (
+                                  <option key={item.id} value={item.name}>
+                                    {item.name}
+                                  </option>
+                                ))} */}
                               </select>
                             </div>
                           </div>
@@ -564,7 +1006,12 @@ const Product_Admin = () => {
                             >
                               Cancel
                             </button>
-                            <button className="btn_confirm btn_addproducttxt_popup">
+                            <button
+                              className="btn_confirm btn_addproducttxt_popup"
+                              onClick={() => {
+                                ChangeProductCategory();
+                              }}
+                            >
                               Update
                             </button>
                           </div>
@@ -580,6 +1027,10 @@ const Product_Admin = () => {
                               type="text"
                               placeholder="Price..."
                               className="input_of_txtAddproduct"
+                              value={data}
+                              onChange={(e) => {
+                                set_data(e.target.value);
+                              }}
                             />
                           </div>
                           <div className="btn_foasdf">
@@ -589,7 +1040,12 @@ const Product_Admin = () => {
                             >
                               Cancel
                             </button>
-                            <button className="btn_confirm btn_addproducttxt_popup">
+                            <button
+                              className="btn_confirm btn_addproducttxt_popup"
+                              onClick={() => {
+                                ChangeProductPrice();
+                              }}
+                            >
                               Update
                             </button>
                           </div>
@@ -599,9 +1055,9 @@ const Product_Admin = () => {
 
                     <div
                       className="box_icon_MdOutlineEdit"
-                      onClick={() => openConfirmationDesc(product.productID)}
+                      onClick={() => openConfirmationDesc(product.id)}
                     >
-                      <li>Desc: {product.desc}</li>
+                      <li>Desc: {product.description}</li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
                     {isConfirmationDesc && (
@@ -613,6 +1069,10 @@ const Product_Admin = () => {
                               type="text"
                               placeholder="Description..."
                               className="input_of_txtAddproduct"
+                              value={data}
+                              onChange={(e) => {
+                                set_data(e.target.value);
+                              }}
                             />
                           </div>
                           <div className="btn_foasdf">
@@ -622,7 +1082,12 @@ const Product_Admin = () => {
                             >
                               Cancel
                             </button>
-                            <button className="btn_confirm btn_addproducttxt_popup">
+                            <button
+                              className="btn_confirm btn_addproducttxt_popup"
+                              onClick={() => {
+                                ChangeProductDescription();
+                              }}
+                            >
                               Update
                             </button>
                           </div>
@@ -631,9 +1096,14 @@ const Product_Admin = () => {
                     )}
                     <div
                       className="box_icon_MdOutlineEdit"
-                      onClick={() => openConfirmationSize(product.productID)}
+                      onClick={() =>
+                        openConfirmationSize(product.id, product.sizes)
+                      }
                     >
-                      <li>Size: {product.size}</li>
+                      {/* <li>Size: {product.size}</li> */}
+                      <li>
+                        Size: {product.sizes.map((size) => size.name + " ")}
+                      </li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
                     {isConfirmationSize && (
@@ -643,16 +1113,14 @@ const Product_Admin = () => {
                             <p>Edit product size</p>
                             <div className="box_size_container">
                               <div className="box_size_add">
-                                {product.size.map((size, sizeIndex) => (
+                                {data_array.map((size, index) => (
                                   <div
-                                    key={sizeIndex}
+                                    key={index}
                                     className="box_size_add_item"
                                   >
-                                    <p>{size}</p>
+                                    <p>{size.name}</p>
                                     <span
-                                      onClick={() =>
-                                        removeSizeInput(index, sizeIndex)
-                                      }
+                                      onClick={() => removeSizeInput(index)}
                                     >
                                       <MdClose id="icon_MdClose" />
                                     </span>
@@ -660,11 +1128,11 @@ const Product_Admin = () => {
                                 ))}
                               </div>
 
-                              <div className="box_size_content">
+                              {/* <div className="box_size_content">
                                 <input
                                   type="text"
                                   placeholder="Add Sizes..."
-                                  value={product.currentsizes || ""}
+                                  value={data_array[index]?.currentsizes || ""}
                                   onChange={(e) =>
                                     handleSizeInputChange(e, index)
                                   }
@@ -675,7 +1143,24 @@ const Product_Admin = () => {
                                 >
                                   Add
                                 </div>
+                              </div> */}
+                              <div className="box_size_content">
+                                <input
+                                  type="text"
+                                  placeholder="Add Sizes..."
+                                  value={data_array[index]?.currentsizes || ""}
+                                  onChange={(e) =>
+                                    handleSizeInputChange(e, index)
+                                  }
+                                />
+                                <button
+                                  className="btn_addsize"
+                                  onClick={() => addSizeInput(index)}
+                                >
+                                  Add
+                                </button>
                               </div>
+
                             </div>
                           </div>
                           <div className="btn_foasdf">
@@ -694,9 +1179,13 @@ const Product_Admin = () => {
                     )}
                     <div
                       className="box_icon_MdOutlineEdit"
-                      onClick={() => openConfirmationColor(product.productID)}
+                      onClick={() =>
+                        openConfirmationColor(product.id, product.size)
+                      }
                     >
-                      <li>Color: {product.color}</li>
+                      <li>
+                        Color: {product.colors.map((color) => color.name + " ")}
+                      </li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
                     {isConfirmationColor && (
@@ -706,7 +1195,7 @@ const Product_Admin = () => {
                             <p>Edit product color</p>
                             <div className="box_size_container">
                               <div className="box_size_add">
-                                {product.color.map((color, colorIndex) => (
+                                {data_array.map((color, colorIndex) => (
                                   <div
                                     key={colorIndex}
                                     className="box_size_add_item"

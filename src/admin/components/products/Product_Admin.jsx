@@ -28,6 +28,9 @@ const Product_Admin = () => {
   const [id, set_id] = useState(null);
   const [data, set_data] = useState(null);
   const [data_array, set_data_array] = useState([]);
+  // const [data_array, set_data_array] = useState([
+  //   { currentsizes: "", sizes: [], name: "Product Name" },
+  // ]);
 
   var store_id = false;
   if (localStorage.getItem("user")) {
@@ -394,38 +397,70 @@ const Product_Admin = () => {
   };
 
   /////////////////////// Add Sizes
-  const handleSizeInputChange = (e, index) => {
-    const { value } = e.target;
-    const updatedProducts = [...data_array];
-    updatedProducts[index]={...updatedProducts[index],currentsizes: value};
-    set_data_array(updatedProducts);
-  };
+  // const handleSizeInputChange = (e, index) => {
+  //   const { value } = e.target;
+  //   const updatedProducts = [...data_array];
+  //   updatedProducts[index]={...updatedProducts[index],currentsizes: value};
+  //   set_data_array(updatedProducts);
+  // };
+
+  // const addSizeInput = (index) => {
+  //   const updatedProducts = [...data_array];
+  //   if (updatedProducts[index].currentsizes.trim() !== "") {
+  //     updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
+  //     updatedProducts[index].currentsizes = "";
+  //     set_data_array(updatedProducts);
+  //   }
+  // };
+
+  // const removeSizeInput = (index) => {
+  //   const updatedProducts = [...data_array];
+  //   updatedProducts.splice(index, 1);
+  //   set_data_array(updatedProducts);
+  // };
+
+  // const removeSizeInput = (index) => {
+  //   const updatedProducts = [...data_array];
+  //   updatedProducts.splice(index, 1);
+  //   set_data_array(updatedProducts);
+  // };
 
   // const handleSizeInputChange = (e, index) => {
   //   const { value } = e.target;
   //   const updatedProducts = [...data_array];
-  //   updatedProducts[index] = {...updatedProducts[index],currentsizes: value };
+  //   updatedProducts[index] = { ...updatedProducts[index], currentsizes: value };
   //   set_data_array(updatedProducts);
   // };
 
-  const addSizeInput = (index) => {
-    const updatedProducts = [...data_array];
-    if (updatedProducts[index].currentsizes.trim() !== "") {
-      updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
-      updatedProducts[index].currentsizes = "";
-      set_data_array(updatedProducts);
-    }
-  };
+  // const addSizeInput = (index) => {
+  //   const updatedProducts = [...data_array];
+  //   if (updatedProducts[index].currentsizes.trim() !== "") {
+  //     updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
+  //     updatedProducts[index].currentsizes = "";
+  //     set_data_array(updatedProducts);
+  //   }
+  // };
+
+  // Submit button
+
+  // const removeSizeInput = (index) => {
+  //   const updatedProducts = [...data_array];
+  //   updatedProducts.splice(index, 1);
+  //   set_data_array(updatedProducts);
+  // };
+
+  // const handleSizeInputChange = (e, index) => {
+  //   const { value } = e.target;
+  //   const updatedProducts = [...data_array];
+  //   updatedProducts[index] = { ...updatedProducts[index], currentsizes: value };
+  //   set_data_array(updatedProducts);
+  // };
 
   // const addSizeInput = (index) => {
   //   const updatedProducts = [...data_array];
-  //   const currentSizes = updatedProducts[index].currentsizes.trim();
-  //   if (currentSizes !== "") {
-  //     updatedProducts[index] = {
-  //       ...updatedProducts[index],
-  //       sizes: [...updatedProducts[index].sizes, currentSizes],
-  //       currentsizes: ""
-  //     };
+  //   if (updatedProducts[index].currentsizes.trim() !== "") {
+  //     updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
+  //     updatedProducts[index].currentsizes = "";
   //     set_data_array(updatedProducts);
   //   }
   // };
@@ -436,7 +471,23 @@ const Product_Admin = () => {
     set_data_array(updatedProducts);
   };
 
-  // Submit button
+  const handleSizeInputChange = (e, index) => {
+    const { value } = e.target;
+    const updatedProducts = [...data_array];
+    updatedProducts[index] = { ...updatedProducts[index], currentsizes: value };
+    set_data_array(updatedProducts);
+  };
+
+  const addSizeInput = (index) => {
+    const updatedProducts = [...data_array];
+    if (updatedProducts[index].currentsizes.trim() !== "") {
+      if (!updatedProducts[index].sizes) updatedProducts[index].sizes = [];
+      updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
+      updatedProducts[index].currentsizes = "";
+      set_data_array(updatedProducts);
+    }
+  };
+
   const ChangeBackgroundImage = () => {
     const formdata = new FormData();
     formdata.append("background_image", image);
@@ -1112,7 +1163,7 @@ const Product_Admin = () => {
                           <div className="box_size_input">
                             <p>Edit product size</p>
                             <div className="box_size_container">
-                              <div className="box_size_add">
+                              {/* <div className="box_size_add">
                                 {data_array.map((size, index) => (
                                   <div
                                     key={index}
@@ -1126,8 +1177,7 @@ const Product_Admin = () => {
                                     </span>
                                   </div>
                                 ))}
-                              </div>
-
+                              </div> */}
                               {/* <div className="box_size_content">
                                 <input
                                   type="text"
@@ -1144,7 +1194,7 @@ const Product_Admin = () => {
                                   Add
                                 </div>
                               </div> */}
-                              <div className="box_size_content">
+                              {/* <div className="box_size_content">
                                 <input
                                   type="text"
                                   placeholder="Add Sizes..."
@@ -1159,8 +1209,103 @@ const Product_Admin = () => {
                                 >
                                   Add
                                 </button>
-                              </div>
+                              </div> */}
+                              {/* <div className="box_size_add">
+                                {data_array.map((size, index) => (
+                                  <div
+                                    key={index}
+                                    className="box_size_add_item"
+                                  >
+                                    <p>{size.name}</p>
+                                    <span
+                                      onClick={() => removeSizeInput(index)}
+                                    >
+                                      <MdClose id="icon_MdClose" />
+                                    </span>
+                                  </div>
+                                
+                                ))} 
 
+                              </div>*/}
+                              {/* <div className="box_size_content">
+                                <input
+                                  type="text"
+                                  placeholder="Add Sizes..."
+                                  value={
+                                    data_array.length > 0
+                                      ? data_array[0].currentsizes
+                                      : ""
+                                  }
+                                  onChange={(e) => handleSizeInputChange(e, 0)}
+                                />
+                                <button
+                                  className="btn_addsize"
+                                  onClick={() => addSizeInput(0)}
+                                >
+                                  Add
+                                </button>
+                              </div> */}
+                              {/* {data_array.map((product, index) => (
+        <div key={index}>
+          <div className="box_size_add">
+            <div className="box_size_add_item">
+              <p>{product.name}</p>
+              <span onClick={() => removeSizeInput(index)}>
+                <MdClose id="icon_MdClose" />
+              </span>
+            </div>
+            {product.sizes && product.sizes.map((size, idx) => (
+              <p key={idx}>{size}</p>
+            ))}
+          </div>
+          <div className="box_size_content">
+            <input
+              type="text"
+              placeholder="Add Sizes..."
+              value={product.currentsizes || ""}
+              onChange={(e) => handleSizeInputChange(e, index)}
+            />
+            <button className="btn_addsize" onClick={() => addSizeInput(index)}>
+              Add
+            </button>
+          </div>
+        </div>
+      ))} */}
+                              {data_array.map((product, index) => (
+                                <div key={index}>
+                                  <div className="box_size_add">
+                                    <div className="box_size_add_item">
+                                      <p>{product.name}</p>
+                                      <span
+                                        onClick={() => removeSizeInput(index)}
+                                      >
+                                        <MdClose id="icon_MdClose" />
+                                      </span>
+                                    </div>
+                                    <p>
+                                      {product.sizes && product.sizes.length > 0
+                                        ? product.sizes.join(", ")
+                                        : ""}
+                                    </p>
+                                  </div>
+                                  <div className="box_size_content">
+                                    <input
+                                      type="text"
+                                      placeholder="Add Sizes..."
+                                      value={product.currentsizes || ""}
+                                      onChange={(e) =>
+                                        handleSizeInputChange(e, index)
+                                      }
+                                    />
+                                    <button
+                                      className="btn_addsize"
+                                      onClick={() => addSizeInput(index)}
+                                    >
+                                      Add
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
                             </div>
                           </div>
                           <div className="btn_foasdf">

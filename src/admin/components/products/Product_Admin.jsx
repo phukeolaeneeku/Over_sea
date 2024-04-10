@@ -28,10 +28,16 @@ const Product_Admin = () => {
   const [id, set_id] = useState(null);
   const [data, set_data] = useState(null);
   const [data_array, set_data_array] = useState([]);
+  const [data_color, setData_color] = useState([]);
+
+  console.log("Data....",data)
 
   const [sizes, setSizes] = useState([]);
+  const [colors, setColors] = useState([]);
   const [currentSize, setCurrentSize] = useState("");
+  const [currentColor, setCurrentColor] = useState("");
 
+console.log("Colors...:",colors)
   /////////////////////// Add Sizes
   useEffect(() => {
     const extractedNames = data_array.map(item => item.name);
@@ -57,6 +63,32 @@ const Product_Admin = () => {
     updatedSizes.splice(sizeIndex, 1);
     setSizes(updatedSizes);
   };
+  /////////////////////// Add Colors
+  useEffect(() => {
+    const extractedNames = data_color.map(item => item.name);
+    setColors(extractedNames);
+  }, [data_color]);
+
+  const handleColorInputChange = (e, index) => {
+    const { value } = e.target;
+    const updatedColors = [...colors];
+    updatedColors[index] = value;
+    setColors(updatedColors);
+  };
+
+  const addColorInput = () => {
+    if (currentColor.trim() !== "") {
+      setColors([...colors, currentColor]);
+      setCurrentColor("");
+    }
+  };
+
+  const removeColorInput = (index) => {
+    const updatedColors = [...colors];
+    updatedColors.splice(index, 1);
+    setColors(updatedColors);
+  };
+
 
 
 
@@ -321,34 +353,30 @@ const Product_Admin = () => {
 
   ///// onClick icon edit product Size
 
-
   const openConfirmationSize = (id, sizes) => {
     console.log("sizes: ", sizes)
     set_id(id);
-    // setSizes(sizes);
     set_data_array(sizes);
     setConfirmationSize(true);
   };
 
-
   const closeConfirmationSize = () => {
     set_data_array([]);
-    set_id(null);
+    set_id(id);
     setConfirmationSize(false);
   };
 
-  ///// onClick icon edit product Size
-
-  const openConfirmationColor = (id) => {
-    // setUpdateProductId(productID.price);
+  ///// onClick icon edit product Color
+  const openConfirmationColor = (id, colors) => {
+    console.log("colors: ", colors)
+    setData_color(colors);
     set_id(id);
     setConfirmationColor(true);
   };
 
   const closeConfirmationColor = () => {
-    // setUpdateProductId(null);
-    set_data(null);
-    set_id(null);
+    setData_color([]);
+    set_id(id);
     setConfirmationColor(false);
   };
 
@@ -1083,7 +1111,7 @@ const Product_Admin = () => {
                     >
                       {/* <li>Size: {product.size}</li> */}
                       <li>
-                        Size: {product.sizes.map((size) => size.name + " ")}
+                        Size: {product.sizes.map((size) => size.name + ", ")}
                       </li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
@@ -1092,7 +1120,7 @@ const Product_Admin = () => {
                         <div className="addproductpopup_box">
                           <div className="box_size_input">
                             <p>Edit product size</p>
-                            
+
                             <div className="box_size_container">
                               <div className="box_size_add">
                                 {sizes.map((size, sizeIndex) => (
@@ -1145,11 +1173,11 @@ const Product_Admin = () => {
                     <div
                       className="box_icon_MdOutlineEdit"
                       onClick={() =>
-                        openConfirmationColor(product.id, product.size)
+                        openConfirmationColor(product.id, product.colors)
                       }
                     >
                       <li>
-                        Color: {product.colors.map((color) => color.name + " ")}
+                        Color: {product.colors.map((color) => color.name + ", ")}
                       </li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
@@ -1160,12 +1188,12 @@ const Product_Admin = () => {
                             <p>Edit product color</p>
                             <div className="box_size_container">
                               <div className="box_size_add">
-                                {data_array.map((color, index) => (
+                                {colors.map((colors, index) => (
                                   <div
                                     key={index}
                                     className="box_size_add_item"
                                   >
-                                    <p>{color.name}</p>
+                                    <p>{colors}</p>
                                     <span
                                       onClick={() => removeColorInput(index)}
                                     >
@@ -1179,16 +1207,14 @@ const Product_Admin = () => {
                                 <input
                                   type="text"
                                   placeholder="Add Colors..."
-                                  value={
-                                    data_array.length > 0
-                                      ? data_array[0].currentcolors
-                                      : ""
+                                  value={currentColor}
+                                  onChange={(e) =>
+                                    setCurrentColor(e.target.value)
                                   }
-                                  onChange={(e) => handleColorInputChange(e, 0)}
                                 />
                                 <div
                                   className="btn_addsize"
-                                  onClick={() => addColorInput(0)}
+                                  onClick={addColorInput}
                                 >
                                   Add
                                 </div>

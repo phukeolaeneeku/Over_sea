@@ -18,7 +18,7 @@ const AddProduct = () => {
       price: "",
       category: "",
       description: "",
-      sizes: [],
+      sizes: ["M", "L"],
       colors: [],
     },
   ]);

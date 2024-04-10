@@ -28,9 +28,37 @@ const Product_Admin = () => {
   const [id, set_id] = useState(null);
   const [data, set_data] = useState(null);
   const [data_array, set_data_array] = useState([]);
-  // const [data_array, set_data_array] = useState([
-  //   { currentsizes: "", sizes: [], name: "Product Name" },
-  // ]);
+
+  const [sizes, setSizes] = useState([]);
+  const [currentSize, setCurrentSize] = useState("");
+
+  /////////////////////// Add Sizes
+  useEffect(() => {
+    const extractedNames = data_array.map(item => item.name);
+    setSizes(extractedNames);
+  }, [data_array]);
+
+  const handleSizeInputChange = (e, index) => {
+    const { value } = e.target;
+    const updatedSizes = [...sizes];
+    updatedSizes[index] = value;
+    setSizes(updatedSizes);
+  };
+
+  const addSizeInput = () => {
+    if (currentSize.trim() !== "") {
+      setSizes([...sizes, currentSize]);
+      setCurrentSize("");
+    }
+  };
+
+  const removeSizeInput = (sizeIndex) => {
+    const updatedSizes = [...sizes];
+    updatedSizes.splice(sizeIndex, 1);
+    setSizes(updatedSizes);
+  };
+
+
 
   var store_id = false;
   if (localStorage.getItem("user")) {
@@ -293,24 +321,15 @@ const Product_Admin = () => {
 
   ///// onClick icon edit product Size
 
-  // const openConfirmationSize = (id, sizes) => {
-  //   // setUpdateProductId(productID.price);
-  //   set_id(id);
-  //   set_data_array(sizes);
-  //   setConfirmationSize(true);
-  // };
 
   const openConfirmationSize = (id, sizes) => {
+    console.log("sizes: ", sizes)
     set_id(id);
+    // setSizes(sizes);
     set_data_array(sizes);
     setConfirmationSize(true);
   };
 
-  // const closeConfirmationSize = () => {
-  //   // setUpdateProductId(null);
-  //   set_data(null);
-  //   set_id(null);
-  //   setConfirmationSize(false);
 
   const closeConfirmationSize = () => {
     set_data_array([]);
@@ -396,97 +415,8 @@ const Product_Admin = () => {
       });
   };
 
-  /////////////////////// Add Sizes
-  // const handleSizeInputChange = (e, index) => {
-  //   const { value } = e.target;
-  //   const updatedProducts = [...data_array];
-  //   updatedProducts[index]={...updatedProducts[index],currentsizes: value};
-  //   set_data_array(updatedProducts);
-  // };
 
-  // const addSizeInput = (index) => {
-  //   const updatedProducts = [...data_array];
-  //   if (updatedProducts[index].currentsizes.trim() !== "") {
-  //     updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
-  //     updatedProducts[index].currentsizes = "";
-  //     set_data_array(updatedProducts);
-  //   }
-  // };
 
-  // const removeSizeInput = (index) => {
-  //   const updatedProducts = [...data_array];
-  //   updatedProducts.splice(index, 1);
-  //   set_data_array(updatedProducts);
-  // };
-
-  // const removeSizeInput = (index) => {
-  //   const updatedProducts = [...data_array];
-  //   updatedProducts.splice(index, 1);
-  //   set_data_array(updatedProducts);
-  // };
-
-  // const handleSizeInputChange = (e, index) => {
-  //   const { value } = e.target;
-  //   const updatedProducts = [...data_array];
-  //   updatedProducts[index] = { ...updatedProducts[index], currentsizes: value };
-  //   set_data_array(updatedProducts);
-  // };
-
-  // const addSizeInput = (index) => {
-  //   const updatedProducts = [...data_array];
-  //   if (updatedProducts[index].currentsizes.trim() !== "") {
-  //     updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
-  //     updatedProducts[index].currentsizes = "";
-  //     set_data_array(updatedProducts);
-  //   }
-  // };
-
-  // Submit button
-
-  // const removeSizeInput = (index) => {
-  //   const updatedProducts = [...data_array];
-  //   updatedProducts.splice(index, 1);
-  //   set_data_array(updatedProducts);
-  // };
-
-  // const handleSizeInputChange = (e, index) => {
-  //   const { value } = e.target;
-  //   const updatedProducts = [...data_array];
-  //   updatedProducts[index] = { ...updatedProducts[index], currentsizes: value };
-  //   set_data_array(updatedProducts);
-  // };
-
-  // const addSizeInput = (index) => {
-  //   const updatedProducts = [...data_array];
-  //   if (updatedProducts[index].currentsizes.trim() !== "") {
-  //     updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
-  //     updatedProducts[index].currentsizes = "";
-  //     set_data_array(updatedProducts);
-  //   }
-  // };
-
-  const removeSizeInput = (index) => {
-    const updatedProducts = [...data_array];
-    updatedProducts.splice(index, 1);
-    set_data_array(updatedProducts);
-  };
-
-  const handleSizeInputChange = (e, index) => {
-    const { value } = e.target;
-    const updatedProducts = [...data_array];
-    updatedProducts[index] = { ...updatedProducts[index], currentsizes: value };
-    set_data_array(updatedProducts);
-  };
-
-  const addSizeInput = (index) => {
-    const updatedProducts = [...data_array];
-    if (updatedProducts[index].currentsizes.trim() !== "") {
-      if (!updatedProducts[index].sizes) updatedProducts[index].sizes = [];
-      updatedProducts[index].sizes.push(updatedProducts[index].currentsizes);
-      updatedProducts[index].currentsizes = "";
-      set_data_array(updatedProducts);
-    }
-  };
 
   const ChangeBackgroundImage = () => {
     const formdata = new FormData();
@@ -1162,150 +1092,40 @@ const Product_Admin = () => {
                         <div className="addproductpopup_box">
                           <div className="box_size_input">
                             <p>Edit product size</p>
+                            
                             <div className="box_size_container">
-                              {/* <div className="box_size_add">
-                                {data_array.map((size, index) => (
+                              <div className="box_size_add">
+                                {sizes.map((size, sizeIndex) => (
                                   <div
-                                    key={index}
+                                    key={sizeIndex}
                                     className="box_size_add_item"
                                   >
-                                    <p>{size.name}</p>
+                                    <p>{size}</p>
                                     <span
-                                      onClick={() => removeSizeInput(index)}
+                                      onClick={() => removeSizeInput(sizeIndex)}
                                     >
                                       <MdClose id="icon_MdClose" />
                                     </span>
                                   </div>
                                 ))}
-                              </div> */}
-                              {/* <div className="box_size_content">
+                              </div>
+
+                              <div className="box_size_content">
                                 <input
                                   type="text"
                                   placeholder="Add Sizes..."
-                                  value={data_array[index]?.currentsizes || ""}
+                                  value={currentSize}
                                   onChange={(e) =>
-                                    handleSizeInputChange(e, index)
+                                    setCurrentSize(e.target.value)
                                   }
                                 />
                                 <div
                                   className="btn_addsize"
-                                  onClick={() => addSizeInput(index)}
+                                  onClick={addSizeInput}
                                 >
                                   Add
                                 </div>
-                              </div> */}
-                              {/* <div className="box_size_content">
-                                <input
-                                  type="text"
-                                  placeholder="Add Sizes..."
-                                  value={data_array[index]?.currentsizes || ""}
-                                  onChange={(e) =>
-                                    handleSizeInputChange(e, index)
-                                  }
-                                />
-                                <button
-                                  className="btn_addsize"
-                                  onClick={() => addSizeInput(index)}
-                                >
-                                  Add
-                                </button>
-                              </div> */}
-                              {/* <div className="box_size_add">
-                                {data_array.map((size, index) => (
-                                  <div
-                                    key={index}
-                                    className="box_size_add_item"
-                                  >
-                                    <p>{size.name}</p>
-                                    <span
-                                      onClick={() => removeSizeInput(index)}
-                                    >
-                                      <MdClose id="icon_MdClose" />
-                                    </span>
-                                  </div>
-                                
-                                ))} 
-
-                              </div>*/}
-                              {/* <div className="box_size_content">
-                                <input
-                                  type="text"
-                                  placeholder="Add Sizes..."
-                                  value={
-                                    data_array.length > 0
-                                      ? data_array[0].currentsizes
-                                      : ""
-                                  }
-                                  onChange={(e) => handleSizeInputChange(e, 0)}
-                                />
-                                <button
-                                  className="btn_addsize"
-                                  onClick={() => addSizeInput(0)}
-                                >
-                                  Add
-                                </button>
-                              </div> */}
-                              {/* {data_array.map((product, index) => (
-        <div key={index}>
-          <div className="box_size_add">
-            <div className="box_size_add_item">
-              <p>{product.name}</p>
-              <span onClick={() => removeSizeInput(index)}>
-                <MdClose id="icon_MdClose" />
-              </span>
-            </div>
-            {product.sizes && product.sizes.map((size, idx) => (
-              <p key={idx}>{size}</p>
-            ))}
-          </div>
-          <div className="box_size_content">
-            <input
-              type="text"
-              placeholder="Add Sizes..."
-              value={product.currentsizes || ""}
-              onChange={(e) => handleSizeInputChange(e, index)}
-            />
-            <button className="btn_addsize" onClick={() => addSizeInput(index)}>
-              Add
-            </button>
-          </div>
-        </div>
-      ))} */}
-                              {data_array.map((product, index) => (
-                                <div key={index}>
-                                  <div className="box_size_add">
-                                    <div className="box_size_add_item">
-                                      <p>{product.name}</p>
-                                      <span
-                                        onClick={() => removeSizeInput(index)}
-                                      >
-                                        <MdClose id="icon_MdClose" />
-                                      </span>
-                                    </div>
-                                    <p>
-                                      {product.sizes && product.sizes.length > 0
-                                        ? product.sizes.join(", ")
-                                        : ""}
-                                    </p>
-                                  </div>
-                                  <div className="box_size_content">
-                                    <input
-                                      type="text"
-                                      placeholder="Add Sizes..."
-                                      value={product.currentsizes || ""}
-                                      onChange={(e) =>
-                                        handleSizeInputChange(e, index)
-                                      }
-                                    />
-                                    <button
-                                      className="btn_addsize"
-                                      onClick={() => addSizeInput(index)}
-                                    >
-                                      Add
-                                    </button>
-                                  </div>
-                                </div>
-                              ))}
+                              </div>
                             </div>
                           </div>
                           <div className="btn_foasdf">
@@ -1340,16 +1160,14 @@ const Product_Admin = () => {
                             <p>Edit product color</p>
                             <div className="box_size_container">
                               <div className="box_size_add">
-                                {data_array.map((color, colorIndex) => (
+                                {data_array.map((color, index) => (
                                   <div
-                                    key={colorIndex}
+                                    key={index}
                                     className="box_size_add_item"
                                   >
-                                    <p>{color}</p>
+                                    <p>{color.name}</p>
                                     <span
-                                      onClick={() =>
-                                        removeColorInput(index, colorIndex)
-                                      }
+                                      onClick={() => removeColorInput(index)}
                                     >
                                       <MdClose id="icon_MdClose" />
                                     </span>
@@ -1361,14 +1179,16 @@ const Product_Admin = () => {
                                 <input
                                   type="text"
                                   placeholder="Add Colors..."
-                                  value={product.currentcolors || ""}
-                                  onChange={(e) =>
-                                    handleColorInputChange(e, index)
+                                  value={
+                                    data_array.length > 0
+                                      ? data_array[0].currentcolors
+                                      : ""
                                   }
+                                  onChange={(e) => handleColorInputChange(e, 0)}
                                 />
                                 <div
                                   className="btn_addsize"
-                                  onClick={() => addColorInput(index)}
+                                  onClick={() => addColorInput(0)}
                                 >
                                   Add
                                 </div>

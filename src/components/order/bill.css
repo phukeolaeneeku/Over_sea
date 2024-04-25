@@ -28,7 +28,10 @@
     gap: 1rem;
     padding-bottom: 1rem;
 }
-
+.textareatxt{
+    width: 100%;
+    padding: 10px 10px;
+}
 .billGopBox {
     display: grid;
     width: 100%;
@@ -86,6 +89,7 @@
     font-size: 14px;
     color: aliceblue;
     background: #FF4F16;
+    cursor: pointer;
 }
 
 /* Responsive */

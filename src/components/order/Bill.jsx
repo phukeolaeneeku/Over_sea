@@ -199,7 +199,7 @@ const Bill = () => {
         </div>
         {order_list.status === "Delivered" && (
           <div style={{ textAlign: "center", width: "60%", margin: "0 auto" }}>
-            <h1>Leave a Review</h1>
+            <h2>Leave a Review</h2>
             <div style={{ marginBottom: "20px" }}>
               {[...Array(5)].map((_, index) => (
                 <span
@@ -222,13 +222,14 @@ const Bill = () => {
               <textarea
                 rows="4"
                 cols="50"
+                className="textareatxt"
                 value={comment}
                 onChange={handleCommentChange}
                 placeholder="Write your review here..."
-                style={{ fontSize: "20px" }}
+                
               />
               <br />
-              <button type="submit" style={{ fontSize: "20px" }}>
+              <button type="submit" className="" >
                 Submit Review
               </button>
             </form>
